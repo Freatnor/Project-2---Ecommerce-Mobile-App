@@ -134,3 +134,43 @@ Base on the requirements you can earn a maximum of 24 requirement points and 3 b
     **3** | _Exceeds expectations, you wonderful creature, you!_
 
 This will serve as a helpful overall gauge of whether you met the project goals, but __the more important scores are the individual ones__ above, which can help you identify where to focus your efforts for the next project!
+
+-----
+#### Planned Features
+
+- Inventory -> A list of items already purchased for the user to see. Includes an ability to equip items to 6 slots
+- Slots for items -> Head, Chest, 2 Weapons, 2 Accessories
+- Types of items and qualities 
+    - Swords, Robes, Bows, etc
+    - Bronze, Steel, Magical!
+    - Have Stats related to Atk and Def
+- Database to hold all of the Item and User data
+    - Either SQLite or Realm based
+- Singleton Shopping cart to hold the session's shopping data (does not persist of not purchased!)
+- Scrolling view of all available items!
+- Ability to sort based on item types, qualities, slots
+- Ability to search items in both store list and inventory!
+
+***Conditions and User Stories***
+1. The Inventory can be considered to work when the user can see 6 items slots displayed on the screen, is able to tap on any of them to select a new item to occupy it, and can also see a searchable, sortable list of items they own below.
+    --- the user can see 6 items slots displayed on the screen, is able to tap on any of them to select a new item to occupy it, and can also see a searchable, sortable list of items they own below.  
+2. The slots are considered to work when items have a different slot depending on the item: hands for weapons, chest for breastplaces and robes, head for hats and helms, and the two accessory slots
+    --- The user can see items that correctly map to hands, head, chest, and accessory slots depending on the type of item   
+3. The types are considered to work when an item has a type, i.e. sword, robe, etc. Every item must have one.
+    --- The user can see items have types like swords, robes, helms, etc. 
+4. The qualities are complete when each item has a quality tier. They are bronze, steel, and magical
+    --- The user can see an item has a quality of either bronze, steel, or magical
+5. Items have stats related to Atk and Def, as well as special properties, descriptions, and prices
+    --- The user can see all of the item's specific information including stats, price, and descriptions
+6. There is a database which holds all of the user and item data. This will be built in either SQLite or Realm
+    --- The user can save their user preferences and item choices. They can also see a persistent list of items to purchase.
+7. There is a singleton to hold shopping cart data for the user and keep it persistent between activities. This will not persist beyond the app closing
+    --- The user can see their shopping cart persist during their session but not after the restart the app.
+8. There is a Shop activity with a list of all items available to buy. Tapping on an item sends the user to a detail view. The item can be added to the cart from either there or the detail view.
+    --- The user can see a list of items they can buy. They can add those items to the cart. Tapping on the item will take them to the detailed view of the item.
+9. There is a detail view showing all of the info for the item. This correctly shows any specials or stats for the item.
+    --- The user can see all the relevant details for each item on their detail page.
+10. The lists of items are sortable by type, quality, and slot
+    --- The user can sort the items by type, quality, and slot
+11. Items are searchable by Name and Description (possibly also by constraints on stats?)
+    --- The user can search items by name, description, and possibly stats
