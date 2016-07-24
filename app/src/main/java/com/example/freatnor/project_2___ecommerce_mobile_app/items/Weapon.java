@@ -11,21 +11,21 @@ public class Weapon extends Item{
     private String mSlot;
 
     public Weapon(String description, String name, int price, ItemQuality itemQuality, int physicalAttack,
-                  int magicalAttack, int range, String slot) {
+                  int magicalAttack, int range) {
         super(description, name, price, itemQuality);
         mPhysicalAttack = physicalAttack;
         mMagicalAttack = magicalAttack;
         mRange = range;
-        mSlot = slot;
+        mSlot = "hand";
     }
 
     public Weapon(String description, String name, int price, ItemQuality itemQuality, boolean owned, int physicalAttack,
-                  int magicalAttack, int range, String slot) {
+                  int magicalAttack, int range) {
         super(description, name, price, itemQuality, owned);
         mPhysicalAttack = physicalAttack;
         mMagicalAttack = magicalAttack;
         mRange = range;
-        mSlot = slot;
+        mSlot = "hand";
     }
 
     public int getPhysicalAttack() {
