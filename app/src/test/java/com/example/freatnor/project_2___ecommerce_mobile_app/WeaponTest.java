@@ -1,5 +1,8 @@
 package com.example.freatnor.project_2___ecommerce_mobile_app;
 
+import com.example.freatnor.project_2___ecommerce_mobile_app.items.Item;
+import com.example.freatnor.project_2___ecommerce_mobile_app.items.Weapon;
+
 import org.junit.Test;
 
 /**
@@ -18,6 +21,6 @@ public class WeaponTest {
 
     @Test
     public void getRangeTest(){
-        
+
     }
 }
