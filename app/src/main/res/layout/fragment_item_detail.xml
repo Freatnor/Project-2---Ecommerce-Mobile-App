@@ -240,7 +240,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="Price: "
-            android:textSize="28sp"
+            android:textSize="20sp"
             android:textColor="@color/colorGold"
             android:textStyle="bold"/>
         <TextView
@@ -250,7 +250,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="0"
-            android:textSize="28sp"
+            android:textSize="20sp"
             android:textColor="@color/colorGold"
             android:textStyle="bold"/>
         <TextView
@@ -260,7 +260,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="G"
-            android:textSize="28sp"
+            android:textSize="20sp"
             android:textColor="@color/colorGold"
             android:textStyle="bold"/>
         <Button

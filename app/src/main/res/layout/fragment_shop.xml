@@ -11,8 +11,50 @@
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
+        android:layout_gravity="bottom"
+        android:background="@color/colorPrimaryDark">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
 
+            <TextView
+                android:id="@+id/shop_total_price_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Total Price: "
+                android:textSize="20sp"
+                android:textColor="@color/colorGold"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/shop_total_price_text_view"
+                android:layout_toRightOf="@id/shop_total_price_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="0"
+                android:textSize="20sp"
+                android:textColor="@color/colorGold"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/currency_label"
+                android:layout_toRightOf="@id/shop_total_price_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="G"
+                android:textSize="20sp"
+                android:textColor="@color/colorGold"
+                android:textStyle="bold"/>
+            <Button
+                android:id="@+id/add_to_cart_or_equip_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:text="Go To Cart"/>
+        </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 
 </FrameLayout>
