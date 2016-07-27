@@ -6,7 +6,8 @@
               android:elevation="5dp">
     <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical">
         <ImageView
             android:layout_width="150dp"
             android:layout_height="150dp"
@@ -40,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_weight="0.5">
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="2.5dp">
@@ -51,20 +52,38 @@
                         android:src="@drawable/ic_physical_attack"/>
                     <TextView
                         android:id="@+id/physical_attack_label"
-                        android:layout_toRightOf="@id/physical_attack_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="ATK:"
                         android:textSize="20sp"/>
                     <TextView
                         android:id="@+id/physical_attack_value"
-                        android:layout_toRightOf="@id/physical_attack_label"
                         android:layout_marginLeft="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
                         android:textSize="20sp"/>
-                </RelativeLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/physical_attack_change_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/holo_red_dark">
+                    <TextView
+                        android:id="@+id/physical_attack_change_value"
+                        android:padding="3dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="15"
+                        android:textStyle="bold"/>
+                    <ImageView
+                        android:id="@+id/physical_attack_change_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_keyboard_arrow_down_black_24dp"/>
+                </LinearLayout>
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -90,6 +109,26 @@
                         android:text="0"
                         android:textSize="20sp"/>
                 </RelativeLayout>
+                <LinearLayout
+                    android:id="@+id/magic_attack_change_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/holo_red_dark">
+                    <TextView
+                        android:id="@+id/magical_attack_change_value"
+                        android:padding="3dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="15"
+                        android:textStyle="bold"/>
+                    <ImageView
+                        android:id="@+id/magic_attack_change_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_keyboard_arrow_down_black_24dp"/>
+                </LinearLayout>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -121,6 +160,26 @@
                         android:text="0"
                         android:textSize="20sp"/>
                 </RelativeLayout>
+                <LinearLayout
+                    android:id="@+id/physical_defense_change_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/holo_red_dark">
+                    <TextView
+                        android:id="@+id/physical_defense_change_value"
+                        android:padding="3dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="15"
+                        android:textStyle="bold"/>
+                    <ImageView
+                        android:id="@+id/physical_defense_change_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_keyboard_arrow_down_black_24dp"/>
+                </LinearLayout>
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -146,6 +205,26 @@
                         android:text="0"
                         android:textSize="20sp"/>
                 </RelativeLayout>
+                <LinearLayout
+                    android:id="@+id/magical_defense_change_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/holo_red_dark">
+                    <TextView
+                        android:id="@+id/magical_defense_change_value"
+                        android:padding="3dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="15"
+                        android:textStyle="bold"/>
+                    <ImageView
+                        android:id="@+id/magical_defense_change_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_keyboard_arrow_down_black_24dp"/>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
