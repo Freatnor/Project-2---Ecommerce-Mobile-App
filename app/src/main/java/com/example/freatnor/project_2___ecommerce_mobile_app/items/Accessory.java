@@ -33,7 +33,7 @@ public class Accessory extends Item {
         mSpecialAbility = specialAbility;
     }
 
-    public int getMagicAttack() {
+    public int getMagicalAttack() {
         return mMagicAttack;
     }
 
@@ -41,11 +41,11 @@ public class Accessory extends Item {
         return mPhysicalAttack;
     }
 
-    public int getDefense() {
+    public int getPhysicalDefense() {
         return mDefense;
     }
 
-    public int getMagicDefense() {
+    public int getMagicalDefense() {
         return mMagicDefense;
     }
 

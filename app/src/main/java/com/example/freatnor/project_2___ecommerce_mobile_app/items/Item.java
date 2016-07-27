@@ -76,4 +76,17 @@ public abstract class Item {
     public abstract int getItemOptimizedOffensiveWeight();
 
     public abstract int getItemOptimizedDefensiveWeight();
+
+    public abstract String getSlot();
+
+    public abstract int getPhysicalAttack();
+
+    public abstract int getMagicalAttack();
+
+    public abstract int getPhysicalDefense();
+
+    public abstract int getMagicalDefense();
+
+    public abstract String getSpecialAbility();
+
 }

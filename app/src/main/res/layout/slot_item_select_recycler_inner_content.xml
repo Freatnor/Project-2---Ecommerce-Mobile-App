@@ -1,128 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:elevation="5dp">
+              android:elevation="5dp"
+              android:orientation="horizontal">
+
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical">
+
         <ImageView
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:src="@mipmap/ic_frame_equipment"
             />
+
         <ImageView
-            android:layout_gravity="center"
             android:id="@+id/item_image_container"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_gravity="center"
             android:src="@drawable/ic_physical_attack"
             />
     </FrameLayout>
+
     <LinearLayout
-        android:padding="5dp"
-        android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginTop="5dp"
+        android:orientation="vertical"
+        android:padding="5dp">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Name Placeholder"
             android:textSize="20sp"
             android:textStyle="bold"/>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="0.5">
+                android:layout_weight="0.5"
+                android:layout_marginRight="5dp"
+                android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="2.5dp">
+
                     <ImageView
                         android:id="@+id/physical_attack_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/item_detail_icon_side_length"
+                        android:layout_height="@dimen/item_detail_icon_side_length"
                         android:src="@drawable/ic_physical_attack"/>
+
                     <TextView
                         android:id="@+id/physical_attack_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="ATK:"
-                        android:textSize="20sp"/>
+                        android:textSize="@dimen/item_detail_text_size"/>
+
                     <TextView
                         android:id="@+id/physical_attack_value"
-                        android:layout_marginLeft="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
                         android:text="0"
-                        android:textSize="20sp"/>
+                        android:textSize="@dimen/item_detail_text_size"/>
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/physical_attack_change_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/holo_red_dark">
+
                     <TextView
                         android:id="@+id/physical_attack_change_value"
-                        android:padding="3dp"
-                        android:layout_marginLeft="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:padding="3dp"
                         android:text="15"
                         android:textStyle="bold"/>
+
                     <ImageView
                         android:id="@+id/physical_attack_change_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_keyboard_arrow_down_black_24dp"/>
                 </LinearLayout>
+
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="2.5dp">
+
                     <ImageView
                         android:id="@+id/magical_attack_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/item_detail_icon_side_length"
+                        android:layout_height="@dimen/item_detail_icon_side_length"
                         android:src="@drawable/ic_magic_attack"/>
+
                     <TextView
                         android:id="@+id/magical_attack_label"
-                        android:layout_toRightOf="@id/magical_attack_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/magical_attack_icon"
                         android:text="MAG:"
-                        android:textSize="20sp"/>
+                        android:textSize="@dimen/item_detail_text_size"/>
+
                     <TextView
                         android:id="@+id/magical_attack_value"
-                        android:layout_toRightOf="@id/magical_attack_label"
-                        android:layout_marginLeft="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/magical_attack_label"
                         android:text="0"
-                        android:textSize="20sp"/>
+                        android:textSize="@dimen/item_detail_text_size"/>
                 </RelativeLayout>
+
                 <LinearLayout
                     android:id="@+id/magic_attack_change_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/holo_red_dark">
+
                     <TextView
                         android:id="@+id/magical_attack_change_value"
-                        android:padding="3dp"
-                        android:layout_marginLeft="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:padding="3dp"
                         android:text="15"
                         android:textStyle="bold"/>
+
                     <ImageView
                         android:id="@+id/magic_attack_change_icon"
                         android:layout_width="wrap_content"
@@ -130,95 +152,110 @@
                         android:src="@drawable/ic_keyboard_arrow_down_black_24dp"/>
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="0.5">
+                android:layout_weight="0.5"
+                android:orientation="vertical">
+
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="2.5dp">
+
                     <ImageView
                         android:id="@+id/physical_defense_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/item_detail_icon_side_length"
+                        android:layout_height="@dimen/item_detail_icon_side_length"
                         android:src="@drawable/ic_physical_defense"/>
+
                     <TextView
                         android:id="@+id/physical_defense_label"
-                        android:layout_toRightOf="@id/physical_defense_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/physical_defense_icon"
                         android:text="DEF:"
-                        android:textSize="20sp"/>
+                        android:textSize="@dimen/item_detail_text_size"/>
+
                     <TextView
                         android:id="@+id/physical_defense_value"
-                        android:layout_toRightOf="@id/physical_defense_label"
-                        android:layout_marginLeft="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/physical_defense_label"
                         android:text="0"
-                        android:textSize="20sp"/>
+                        android:textSize="@dimen/item_detail_text_size"/>
                 </RelativeLayout>
+
                 <LinearLayout
                     android:id="@+id/physical_defense_change_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/holo_red_dark">
+
                     <TextView
                         android:id="@+id/physical_defense_change_value"
-                        android:padding="3dp"
-                        android:layout_marginLeft="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:padding="3dp"
                         android:text="15"
                         android:textStyle="bold"/>
+
                     <ImageView
                         android:id="@+id/physical_defense_change_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_keyboard_arrow_down_black_24dp"/>
                 </LinearLayout>
+
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="2.5dp">
+
                     <ImageView
                         android:id="@+id/magical_defense_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/item_detail_icon_side_length"
+                        android:layout_height="@dimen/item_detail_icon_side_length"
                         android:src="@drawable/ic_magic_defense"/>
+
                     <TextView
                         android:id="@+id/magical_defense_label"
-                        android:layout_toRightOf="@id/magical_defense_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/magical_defense_icon"
                         android:text="SPR:"
-                        android:textSize="20sp"/>
+                        android:textSize="@dimen/item_detail_text_size"/>
+
                     <TextView
                         android:id="@+id/magical_defense_value"
-                        android:layout_toRightOf="@id/magical_defense_label"
-                        android:layout_marginLeft="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/magical_defense_label"
                         android:text="0"
-                        android:textSize="20sp"/>
+                        android:textSize="@dimen/item_detail_text_size"/>
                 </RelativeLayout>
+
                 <LinearLayout
                     android:id="@+id/magical_defense_change_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/holo_red_dark">
+
                     <TextView
                         android:id="@+id/magical_defense_change_value"
-                        android:padding="3dp"
-                        android:layout_marginLeft="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:padding="3dp"
                         android:text="15"
                         android:textStyle="bold"/>
+
                     <ImageView
                         android:id="@+id/magical_defense_change_icon"
                         android:layout_width="wrap_content"
@@ -228,4 +265,5 @@
             </LinearLayout>
         </LinearLayout>
 
+    </LinearLayout>
 </LinearLayout>

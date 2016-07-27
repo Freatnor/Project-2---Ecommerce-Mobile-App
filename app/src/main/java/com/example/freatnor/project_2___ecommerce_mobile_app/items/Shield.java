@@ -22,12 +22,17 @@ public class Shield extends Weapon {
         mMagicDefense = magicDefense;
     }
 
-    public int getDefense() {
+    public int getPhysicalDefense() {
         return mDefense;
     }
 
-    public int getMagicDefense() {
+    public int getMagicalDefense() {
         return mMagicDefense;
+    }
+
+    @Override
+    public String getSpecialAbility() {
+        return null;
     }
 
     //heavily emphasizes defensive stats so these stats aren't important

@@ -20,6 +20,21 @@ public class Sword extends Weapon {
         return 0;
     }
 
+    @Override
+    public int getPhysicalDefense() {
+        return 0;
+    }
+
+    @Override
+    public int getMagicalDefense() {
+        return 0;
+    }
+
+    @Override
+    public String getSpecialAbility() {
+        return null;
+    }
+
     //sword weight for optimized loadout that slightly favors physical attack
     @Override
     public int getItemOptimizedOffensiveWeight() {

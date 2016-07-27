@@ -26,11 +26,11 @@ public abstract class Armor extends Item {
         this.mSlot = slot;
     }
 
-    public int getDefense() {
+    public int getPhysicalDefense() {
         return mDefense;
     }
 
-    public int getMagicDefense() {
+    public int getMagicalDefense() {
         return mMagicDefense;
     }
 

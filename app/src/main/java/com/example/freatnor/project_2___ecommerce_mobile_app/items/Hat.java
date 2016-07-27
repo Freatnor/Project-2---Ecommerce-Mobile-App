@@ -22,7 +22,7 @@ public class Hat extends Armor {
         mSpecialAbility = specialAbility;
     }
 
-    public int getMagicAttack() {
+    public int getMagicalAttack() {
         return mMagicAttack;
     }
 
@@ -39,5 +39,10 @@ public class Hat extends Armor {
     @Override
     public int getItemOptimizedDefensiveWeight() {
         return mMagicDefense + mDefense;
+    }
+
+    @Override
+    public int getPhysicalAttack() {
+        return 0;
     }
 }

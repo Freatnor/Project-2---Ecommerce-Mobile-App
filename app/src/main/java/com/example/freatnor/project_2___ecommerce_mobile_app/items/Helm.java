@@ -25,4 +25,19 @@ public class Helm extends Armor {
     public int getItemOptimizedDefensiveWeight() {
         return mMagicDefense + mDefense;
     }
+
+    @Override
+    public int getPhysicalAttack() {
+        return 0;
+    }
+
+    @Override
+    public int getMagicalAttack() {
+        return 0;
+    }
+
+    @Override
+    public String getSpecialAbility() {
+        return null;
+    }
 }

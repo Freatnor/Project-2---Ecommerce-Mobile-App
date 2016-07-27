@@ -24,4 +24,19 @@ public class Bow extends Weapon {
     public int getItemOptimizedDefensiveWeight() {
         return 0;
     }
+
+    @Override
+    public int getPhysicalDefense() {
+        return 0;
+    }
+
+    @Override
+    public int getMagicalDefense() {
+        return 0;
+    }
+
+    @Override
+    public String getSpecialAbility() {
+        return null;
+    }
 }
