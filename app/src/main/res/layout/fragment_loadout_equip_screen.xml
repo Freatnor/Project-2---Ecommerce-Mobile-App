@@ -3,61 +3,119 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-    android:paddingTop="20dp"
-    android:background="@android:color">
-    <ImageButton
-        android:id="@+id/head_slot_button"
+    android:paddingTop="20dp">
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@drawable/item_border_unequipped"
-        android:layout_margin="5dp"
-        android:src=""/>
+        android:layout_margin="5dp">
+    <ImageView
+        android:id="@+id/head_slot_button"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@mipmap/ic_frame_equipment"/>
+        <ImageView
+            android:id="@+id/head_slot_image"
+            android:layout_gravity="center"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_physical_attack"/>
+    </FrameLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center">
-        <ImageButton
-            android:id="@+id/right_hand_slot_button"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@drawable/item_border_unequipped"
-            android:layout_margin="5dp"
-            android:src=""/>
-        <ImageButton
-            android:id="@+id/chest_slot_button"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@drawable/item_border_unequipped"
-            android:layout_margin="5dp"
-            android:src=""/>
-        <ImageButton
-            android:id="@+id/left_hand_slot_button"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@drawable/item_border_unequipped"
-            android:layout_margin="5dp"
-            android:src=""/>
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp">
+            <ImageView
+                android:id="@+id/right_hand_slot_button"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@mipmap/ic_frame_equipment"/>
+            <ImageView
+                android:id="@+id/right_hand_slot_image"
+                android:layout_gravity="center"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/ic_physical_attack"/>
+        </FrameLayout>
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp">
+            <ImageView
+                android:id="@+id/chest_slot_button"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@mipmap/ic_frame_equipment"/>
+            <ImageView
+                android:id="@+id/chest_slot_image"
+                android:layout_gravity="center"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/ic_physical_attack"/>
+        </FrameLayout>
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp">
+            <ImageView
+                android:id="@+id/left_hand_slot_button"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@mipmap/ic_frame_equipment"/>
+            <ImageView
+                android:id="@+id/left_hand_slot_image"
+                android:layout_gravity="center"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/ic_physical_attack"/>
+        </FrameLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginBottom="10dp">
-        <ImageButton
-            android:id="@+id/accessory_1_slot_button"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@drawable/item_border_unequipped"
-            android:layout_margin="5dp"
-            android:src=""/>
-        <ImageButton
-            android:id="@+id/accessory_2_slot_button"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@drawable/item_border_unequipped"
-            android:layout_margin="5dp"
-            android:src=""/>
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp">
+            <ImageView
+                android:id="@+id/accessory_1_slot_button"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@mipmap/ic_frame_equipment"/>
+            <ImageView
+                android:id="@+id/accessory_1_slot_image"
+                android:layout_gravity="center"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/ic_physical_attack"/>
+        </FrameLayout>
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp">
+            <ImageView
+                android:id="@+id/accessory_2_slot_button"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@mipmap/ic_frame_equipment"/>
+            <ImageView
+                android:id="@+id/accessory_2_slot_image"
+                android:layout_gravity="center"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/ic_physical_attack"/>
+        </FrameLayout>
     </LinearLayout>
     
     <LinearLayout
@@ -65,16 +123,15 @@
         android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="wrap_content"
+            android:layout_weight="0.25"
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:background="@drawable/stat_totals_border">
-        <TextView
+        <ImageView
             android:id="@+id/p_attack_label"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="P Attack: "
-            android:textStyle="bold"
-            android:textSize="15sp"/>
+            android:src="@drawable/ic_physical_attack"/>
             <TextView
                 android:id="@+id/p_attack_total"
                 android:layout_width="wrap_content"
@@ -87,14 +144,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
+            android:layout_weight="0.25"
             android:background="@drawable/stat_totals_border">
-            <TextView
+            <ImageView
                 android:id="@+id/m_attack_label"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="P Attack: "
-                android:textStyle="bold"
-                android:textSize="15sp"/>
+                android:src="@drawable/ic_magic_attack"/>
             <TextView
                 android:id="@+id/m_attack_total"
                 android:layout_width="wrap_content"
@@ -107,14 +163,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
+            android:layout_weight="0.25"
             android:background="@drawable/stat_totals_border">
-            <TextView
+            <ImageView
                 android:id="@+id/p_defense_label"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="P Defense: "
-                android:textStyle="bold"
-                android:textSize="15sp"/>
+                android:src="@drawable/ic_physical_defense"/>
             <TextView
                 android:id="@+id/p_defense_total"
                 android:layout_width="wrap_content"
@@ -127,18 +182,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
+            android:layout_weight="0.25"
             android:background="@drawable/stat_totals_border">
-            <TextView
+            <ImageView
                 android:id="@+id/m_defense_label"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="P Attack: "
-                android:textStyle="bold"
-                android:textSize="15sp"/>
+                android:src="@drawable/ic_magic_defense"/>
             <TextView
                 android:id="@+id/m_defense_total"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_gravity="center"
                 android:text="Value"
                 android:textStyle="bold"
                 android:textSize="15sp"/>
