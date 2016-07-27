@@ -10,7 +10,7 @@ import io.realm.RealmObject;
  * Singleton? If there are multiple users maybe it won't be a singleton anymore...
  * Created by Jonathan Taylor on 7/26/16.
  */
-public class ShoppingCart extends RealmObject {
+public class ShoppingCart {
 
     private static ShoppingCart mInstance;
     private ArrayList<ShoppingCartItem> mItems;

@@ -13,6 +13,18 @@ public abstract class Item {
         private ItemQuality(int value){
             this.value = value;
         }
+        public String toString(){
+            switch(value){
+                case 0:
+                    return "Bronze";
+                case 1:
+                    return "Steel";
+                case 2:
+                    return "Magical";
+                default:
+                    return "Unknown";
+            }
+        }
     }
 
 

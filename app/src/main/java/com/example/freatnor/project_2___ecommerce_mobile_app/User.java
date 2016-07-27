@@ -11,8 +11,9 @@ import io.realm.RealmObject;
  * like Shopping Cart it is for now a singleton
  * Created by Jonathan Taylor on 7/25/16.
  */
-public class User extends RealmObject{
+public class User {
 
+    private String mUserName;
     private ArrayList<Item> mInventory;
     private HashMap<String, Item> mEquippedItems;
     private int mGoldAmt;
@@ -25,6 +26,7 @@ public class User extends RealmObject{
         mEquippedItems = equippedItems;
         mGoldAmt = goldAmt;
         mShoppingCart = shoppingCart;
+        mUserName = "Default";
     }
 
     public static User getUser(){
