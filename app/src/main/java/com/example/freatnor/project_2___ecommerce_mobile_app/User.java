@@ -5,11 +5,13 @@ import com.example.freatnor.project_2___ecommerce_mobile_app.items.Item;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import io.realm.RealmObject;
+
 /**
  * like Shopping Cart it is for now a singleton
  * Created by Jonathan Taylor on 7/25/16.
  */
-public class User {
+public class User extends RealmObject{
 
     private ArrayList<Item> mInventory;
     private HashMap<String, Item> mEquippedItems;

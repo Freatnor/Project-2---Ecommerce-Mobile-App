@@ -4,11 +4,13 @@ import com.example.freatnor.project_2___ecommerce_mobile_app.items.Item;
 
 import java.util.ArrayList;
 
+import io.realm.RealmObject;
+
 /**
  * Singleton? If there are multiple users maybe it won't be a singleton anymore...
  * Created by Jonathan Taylor on 7/26/16.
  */
-public class ShoppingCart {
+public class ShoppingCart extends RealmObject {
 
     private static ShoppingCart mInstance;
     private ArrayList<ShoppingCartItem> mItems;
