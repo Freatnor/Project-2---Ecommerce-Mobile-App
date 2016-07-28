@@ -503,7 +503,7 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
         int physicalDefense = cursor.getInt(cursor.getColumnIndex(COL_PHYSICAL_DEFENSE));
         int magicalDefense = cursor.getInt(cursor.getColumnIndex(COL_MAGIC_DEFENSE));
         int range = 0;
-        if(type.equals("Bow")){range = cursor.getInt(cursor.getColumnIndex(COL_RANGE))}
+        if(type.equals("Bow")){range = cursor.getInt(cursor.getColumnIndex(COL_RANGE));}
 
         switch(type){
             case "Accessory":
