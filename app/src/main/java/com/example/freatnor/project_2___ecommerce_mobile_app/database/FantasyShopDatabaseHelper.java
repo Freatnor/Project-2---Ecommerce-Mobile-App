@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
 
+import com.example.freatnor.project_2___ecommerce_mobile_app.R;
 import com.example.freatnor.project_2___ecommerce_mobile_app.ShoppingCart;
 import com.example.freatnor.project_2___ecommerce_mobile_app.ShoppingCartItem;
 import com.example.freatnor.project_2___ecommerce_mobile_app.User;
@@ -163,6 +164,16 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_ENTRIES_SHOPPING_CART);
         db.execSQL(SQL_CREATE_ENTRIES_SHOPPING_CART_INVENTORY);
         db.execSQL(SQL_CREATE_ENTRIES_USER_INVENTORY);
+
+        ArrayList<Item> items = new ArrayList<>();
+        items.add(new Sword("A sword", "Bronze Sword", 12, Item.ItemQuality.BRONZE, 10, 0, 0, R.drawable.icon_long_sword));
+        items.add(new Sword("A magical sword imbued with ice", "IceBrand", 400, Item.ItemQuality.MAGICAL, 30, 10, 0, R.drawable.icon_magic_sword));
+        items.add(new Breastplate("A breastplate fashioned from bronze.", "Bronze Armor", 30, Item.ItemQuality.BRONZE, 10, 5, R.drawable.icon_bronze_armor));
+        items.add(new Robe("The robe of a renowned cleric, imbued with magical power.", "Cleric's Robes", 200, Item.ItemQuality.STEEL, 8, 25, 15, R.drawable.icon_cleric_robes));
+        insertItems(items);
+
+        insertOrUpdateUser(User.getUser());
+        insertShoppingCart(ShoppingCart.getInstance());
     }
 
     @Override

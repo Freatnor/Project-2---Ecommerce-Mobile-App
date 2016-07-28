@@ -1,9 +1,11 @@
 package com.example.freatnor.project_2___ecommerce_mobile_app;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,31 +13,47 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.freatnor.project_2___ecommerce_mobile_app.items.Item;
 import com.example.freatnor.project_2___ecommerce_mobile_app.recyclerviewclasses.ItemRecyclerViewAdapter;
+
+import java.util.ArrayList;
 
 /**
  * Created by Jonathan Taylor on 7/28/16.
  */
 public class ShopFragment extends Fragment {
 
+    private ArrayList<Item> mItems;
+
+    public interface OnAddToCartListener{
+        void onAddToCart(int position);
+    }
+
+    public interface OnDetailRequestedListener {
+        void detailRequested(int position);
+    }
+
     private View.OnClickListener mListener;
-    private View.OnClickListener mAddToCartListener;
-    private View.OnClickListener mDetailListener;
+    private OnAddToCartListener mAddToCartListener;
+    private OnDetailRequestedListener mDetailListener;
 
     private RecyclerView mRecyclerView;
     private TextView mTotalPrice;
     private Button mGoToCartButton;
 
     private ItemRecyclerViewAdapter mAdapter;
+    private LinearLayoutManager mManager;
+    private Context mContext;
 
-    private ShoppingCart mCart;
 
-    public ShopFragment getInstance(View.OnClickListener listener, View.OnClickListener addToCartListener,
-                                    View.OnClickListener detailListener){
+    public static ShopFragment getInstance(View.OnClickListener listener, OnAddToCartListener addToCartListener,
+                                           OnDetailRequestedListener detailListener, Context context, ArrayList<Item> items){
         ShopFragment fragment = new ShopFragment();
         fragment.mListener = listener;
         fragment.mAddToCartListener = addToCartListener;
         fragment.mDetailListener = detailListener;
+        fragment.mContext = context;
+        fragment.mItems = items;
         return fragment;
     }
 
@@ -47,9 +65,8 @@ public class ShopFragment extends Fragment {
         mTotalPrice = (TextView) parentView.findViewById(R.id.shop_total_price_text_view);
         mGoToCartButton = (Button) parentView.findViewById(R.id.add_to_cart_or_equip_button);
 
-        mAdapter = new ItemRecyclerViewAdapter(mAddToCartListener, mDetailListener);
-
-        mCart = ShoppingCart.getInstance();
+        mAdapter = new ItemRecyclerViewAdapter(mAddToCartListener, mDetailListener, mItems);
+        mManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
 
         return parentView;
     }
@@ -58,9 +75,10 @@ public class ShopFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mTotalPrice.setText(mCart.getTotalPrice());
+        mTotalPrice.setText(ShoppingCart.getInstance().getTotalPrice());
         mGoToCartButton.setOnClickListener(mListener);
 
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(mManager);
     }
 }

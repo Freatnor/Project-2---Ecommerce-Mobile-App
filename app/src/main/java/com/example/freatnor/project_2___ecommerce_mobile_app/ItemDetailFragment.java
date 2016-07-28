@@ -47,7 +47,7 @@ public class ItemDetailFragment extends Fragment {
 
     //factory method for fragment, takes in the item to display and a boolean for where it came from
     //if true displays price data and button for adding to cart instead
-    public ItemDetailFragment getInstance(Item item, boolean fromShop, View.OnClickListener listener){
+    public static ItemDetailFragment getInstance(Item item, boolean fromShop, View.OnClickListener listener){
         ItemDetailFragment fragment = new ItemDetailFragment();
         fragment.mItem = item;
         fragment.fromShop = fromShop;
