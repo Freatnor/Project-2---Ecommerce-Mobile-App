@@ -14,10 +14,12 @@ public class ShoppingCart {
 
     private static ShoppingCart mInstance;
     private ArrayList<ShoppingCartItem> mItems;
+    private int mShoppingCartId;
 
-
+    //id set to 1 since only 1 shopping cart in use
     private ShoppingCart(){
         mItems = new ArrayList<>();
+        mShoppingCartId = 1;
     }
 
     public static ShoppingCart getInstance(){

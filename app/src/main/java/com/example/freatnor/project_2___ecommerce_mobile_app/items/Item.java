@@ -25,6 +25,9 @@ public abstract class Item {
                     return "Unknown";
             }
         }
+        public int getValue(){
+            return value;
+        }
     }
 
 

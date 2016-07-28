@@ -1,10 +1,17 @@
 package com.example.freatnor.project_2___ecommerce_mobile_app.database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import com.example.freatnor.project_2___ecommerce_mobile_app.ShoppingCartItem;
+import com.example.freatnor.project_2___ecommerce_mobile_app.items.Item;
+
+import java.util.ArrayList;
 
 /**
  * Created by Jonathan Taylor on 7/27/16.
@@ -158,32 +165,65 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public Cursor getShopItems(){
+    public void insertItem(Item item, SQLiteDatabase db){
+        boolean needsClose = false;
+        if(db == null){
+            db = getWritableDatabase();
+            needsClose = true;
+        }
+        ContentValues values = new ContentValues();
+        values.put(COL_ITEM_ID, item.getImageId());
+        values.put(COL_ITEM_NAME, item.getName());
+        values.put(COL_DESCRIPTION, item.getDescription());
+        values.put(COL_ITEM_PRICE, item.getPrice());
+        values.put(COL_ITEM_QUALITY, item.getItemQuality().getValue());
+        try{db.insertOrThrow(ITEMS_TABLE_NAME, null, values);}
+        catch(Exception e){
+            Log.e("Insert", "insertRow: unable to insert because of unique issue", e);
+        }
+        if(needsClose){
+            db.close();
+        }
+    }
+
+    public void insertItems(ArrayList<Item> items){
+        SQLiteDatabase db = getWritableDatabase();
+        for (int i = 0; i < items.size(); i++) {
+            insertItem(items.get(i), db);
+        }
+        close();
+    }
+
+    public ArrayList<Item> getShopItems(){
 
     }
 
-    public Cursor getInventoryItems(){
+    public ArrayList<Item> getInventoryItems(){
 
     }
 
-    public Cursor getItemsByName(String name, int source){
+    public ArrayList<ShoppingCartItem> getShoppingCartItems(){
 
     }
 
-    public Cursor getItemsByType(String type, int source){
+    public ArrayList<Item> getItemsByName(String name, int source){
 
     }
 
-    public Cursor getItemsByQuality(int quality, int source){
+    public ArrayList<Item> getItemsByType(String type, int source){
+
+    }
+
+    public ArrayList<Item> getItemsByQuality(int quality, int source){
 
     }
 
     //searches for items with a price within 10 gold of the entered number
-    public Cursor getItemsByPrice(int price, int source){
+    public ArrayList<Item> getItemsByPrice(int price, int source){
 
     }
 
-    public Cursor getItemsByDescription(String description, int source){
+    public ArrayList<Item> getItemsByDescription(String description, int source){
 
     }
 }

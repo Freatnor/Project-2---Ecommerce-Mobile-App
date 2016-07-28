@@ -14,6 +14,7 @@ import io.realm.RealmObject;
 public class User {
 
     private String mUserName;
+    private int mUserId;
     private ArrayList<Item> mInventory;
     private HashMap<String, Item> mEquippedItems;
     private int mGoldAmt;
@@ -21,17 +22,18 @@ public class User {
 
     private static User mInstance;
 
-    private User(ArrayList<Item> inventory, HashMap<String, Item> equippedItems, int goldAmt, ShoppingCart shoppingCart) {
+    private User(ArrayList<Item> inventory, HashMap<String, Item> equippedItems, int goldAmt, ShoppingCart shoppingCart, int userId) {
         mInventory = inventory;
         mEquippedItems = equippedItems;
         mGoldAmt = goldAmt;
         mShoppingCart = shoppingCart;
         mUserName = "Default";
+        mUserId = userId;
     }
 
     public static User getUser(){
         if(mInstance == null){
-            mInstance = new User(new ArrayList<Item>(), new HashMap<String, Item>(), 0, ShoppingCart.getInstance());
+            mInstance = new User(new ArrayList<Item>(), new HashMap<String, Item>(), 0, ShoppingCart.getInstance(), 1);
         }
         return mInstance;
     }
