@@ -40,4 +40,9 @@ public class Helm extends Armor {
     public String getSpecialAbility() {
         return null;
     }
+
+    @Override
+    public String getType() {
+        return "Helm";
+    }
 }

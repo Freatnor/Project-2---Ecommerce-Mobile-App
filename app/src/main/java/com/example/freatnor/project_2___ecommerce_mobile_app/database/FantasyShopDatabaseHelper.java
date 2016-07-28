@@ -6,12 +6,26 @@ import android.database.Cursor;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
 
+import com.example.freatnor.project_2___ecommerce_mobile_app.ShoppingCart;
 import com.example.freatnor.project_2___ecommerce_mobile_app.ShoppingCartItem;
+import com.example.freatnor.project_2___ecommerce_mobile_app.User;
+import com.example.freatnor.project_2___ecommerce_mobile_app.items.Accessory;
+import com.example.freatnor.project_2___ecommerce_mobile_app.items.Bow;
+import com.example.freatnor.project_2___ecommerce_mobile_app.items.Breastplate;
+import com.example.freatnor.project_2___ecommerce_mobile_app.items.Hat;
+import com.example.freatnor.project_2___ecommerce_mobile_app.items.Helm;
 import com.example.freatnor.project_2___ecommerce_mobile_app.items.Item;
+import com.example.freatnor.project_2___ecommerce_mobile_app.items.Robe;
+import com.example.freatnor.project_2___ecommerce_mobile_app.items.Shield;
+import com.example.freatnor.project_2___ecommerce_mobile_app.items.Staff;
+import com.example.freatnor.project_2___ecommerce_mobile_app.items.Sword;
+import com.example.freatnor.project_2___ecommerce_mobile_app.items.Weapon;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by Jonathan Taylor on 7/27/16.
@@ -63,10 +77,6 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
 
 
 
-    //constants for saying whether for shop or inventory sorting
-    public static final int SELECT_FROM_SHOP = 1;
-    public static final int SELECT_FROM_INVENTORY = 2;
-
     private static FantasyShopDatabaseHelper mInstance;
 
     private FantasyShopDatabaseHelper(Context context) {
@@ -86,7 +96,7 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
             COL_ITEM_NAME + " TEXT," +
             COL_DESCRIPTION + " TEXT," +
             COL_ITEM_PRICE + " INTEGER," +
-            COL_ITEM_QUALITY + " TEXT," +
+            COL_ITEM_QUALITY + " INTEGER," +
             COL_ITEM_TYPE + " TEXT," +
             COL_ITEM_SLOT + " TEXT," +
             COL_PHYSICAL_ATTACK + " INTEGER," +
@@ -177,6 +187,16 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
         values.put(COL_DESCRIPTION, item.getDescription());
         values.put(COL_ITEM_PRICE, item.getPrice());
         values.put(COL_ITEM_QUALITY, item.getItemQuality().getValue());
+        values.put(COL_ITEM_SLOT, item.getSlot());
+        values.put(COL_ITEM_TYPE, item.getType());
+        values.put(COL_PHYSICAL_ATTACK, item.getPhysicalAttack());
+        values.put(COL_MAGIC_ATTACK, item.getMagicalAttack());
+        values.put(COL_MAGIC_DEFENSE, item.getMagicalDefense());
+        values.put(COL_PHYSICAL_DEFENSE, item.getPhysicalDefense());
+        values.put(COL_SPECIAL_ABILITY, item.getSpecialAbility());
+        if(item instanceof Weapon){
+            values.put(COL_RANGE, ((Weapon) item).getRange());
+        }
         try{db.insertOrThrow(ITEMS_TABLE_NAME, null, values);}
         catch(Exception e){
             Log.e("Insert", "insertRow: unable to insert because of unique issue", e);
@@ -194,36 +214,329 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
         close();
     }
 
-    public ArrayList<Item> getShopItems(){
+    //methods for inserting shopping cart items to the shopping cart inventory table
+    //will automatically update if the item already exists in the table.
+    //Not sure if this isn't a good implementation
+    public void insertOrUpdateShoppingCartItem(ShoppingCartItem item, SQLiteDatabase db){
+        boolean needsClose = false;
+        if(db == null){
+            db = getWritableDatabase();
+            needsClose = true;
+        }
+        ContentValues values = new ContentValues();
+        values.put(COL_SHOPPING_CART_ITEM_ID, item.getItem().getImageId());
+        values.put(COL_FOREIGN_SHOPPING_CART_ID, 1);
+        values.put(COL_ITEM_AMOUNT, item.getNumItems());
+        try{db.insertWithOnConflict(SHOPPING_CART_INVENTORY_TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);}
+        catch(Exception e){
+            Log.e("Insert", "insertRow: unable to insert because of unique issue", e);
+        }
+        if(needsClose){
+            db.close();
+        }
+    }
+
+    public void insertShoppingCartItems(ArrayList<ShoppingCartItem> items){
+        SQLiteDatabase db = getWritableDatabase();
+        for (int i = 0; i < items.size(); i++) {
+            insertOrUpdateShoppingCartItem(items.get(i), db);
+        }
+        close();
+    }
+
+    public void insertInventoryItem(Item item, SQLiteDatabase db){
+        boolean needsClose = false;
+        if(db == null){
+            db = getWritableDatabase();
+            needsClose = true;
+        }
+        ContentValues values = new ContentValues();
+        values.put(COL_INVENTORY_ITEM_ID, item.getImageId());
+        values.put(COL_FOREIGN_USER_ID, 1);
+        try{db.insertOrThrow(USER_INVENTORY_TABLE_NAME, null, values);}
+        catch(Exception e){
+            Log.e("Insert", "insertRow: unable to insert because of unique issue", e);
+        }
+        if(needsClose){
+            db.close();
+        }
+    }
+
+    public void insertInventoryItems(ArrayList<Item> items){
+        SQLiteDatabase db = getWritableDatabase();
+        for (int i = 0; i < items.size(); i++) {
+            insertInventoryItem(items.get(i), db);
+        }
+        close();
+    }
+
+    //insert or update user data, any item slot will insert null if not present
+    public void insertOrUpdateUser(User user){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_USER_ID, user.getUserId());
+        values.put(COL_USER_NAME, user.getUserName());
+        values.put(COL_CURRENT_GOLD, user.getGoldAmt());
+        values.put(COL_HEAD, user.getHeadItem().getImageId());
+        values.put(COL_CHEST, user.getChestItem().getImageId());
+        values.put(COL_RIGHT_HAND, user.getRightItem().getImageId());
+        values.put(COL_LEFT_HAND, user.getLeftItem().getImageId());
+        values.put(COL_ACCESSORY1, user.getAccessory1Item().getImageId());
+        values.put(COL_ACCESSORY2, user.getAccessory2Item().getImageId());
+        try{db.insertWithOnConflict(USER_TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);}
+        catch(Exception e){
+            Log.e("Insert", "insertRow: unable to insert because of unique issue", e);
+        }
+        db.close();
+    }
+
+    public void insertShoppingCart(ShoppingCart shoppingCart){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_SHOPPING_CART_ID, shoppingCart.getShoppingCartId());
+        //set to 1 because only 1 user and cart at the moment
+        values.put(COL_SHOPPING_CART_USER, 1);
+        try{db.insertOrThrow(SHOPPING_CART_TABLE_NAME, null, values);}
+        catch(Exception e){
+            Log.e("Insert", "insertRow: unable to insert because of unique issue", e);
+        }
+        db.close();
+    }
+
+    //methods for removing items from the cart
+    public void removeShoppingCartItem(ShoppingCartItem item){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM + " + SHOPPING_CART_INVENTORY_TABLE_NAME +
+                " WHERE " + COL_SHOPPING_CART_ITEM_ID + " = " + item.getItem().getImageId());
+        db.close();
+    }
+
+    public void removeAllShoppingCartItems(){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("TRUNCATE TABLE " + SHOPPING_CART_INVENTORY_TABLE_NAME);
+        db.close();
+    }
+
+    //gets all items in the Items table and processes them into the correct items
+    public ArrayList<Item> getShopItems(String extraSelection, String[] newArg){
+        ArrayList<Item> items = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.query(ITEMS_TABLE_NAME, null, extraSelection, newArg, null, null, null);
+
+        if(cursor.moveToFirst()){
+            //should probably do this with setters...
+            while(!cursor.isAfterLast()){
+                try {
+                    items.add(processItem(cursor));
+                }
+                catch (Exception e){
+                    Log.e("DBHELPER", "getShopItems: ", e);
+                }
+
+                cursor.moveToNext();
+            }
+        }
+
+        cursor.close();
+        return items;
 
     }
 
-    public ArrayList<Item> getInventoryItems(){
+    //same as above but joined to the user inventory
+    public ArrayList<Item> getInventoryItems(User user, String extraSelection, String[] newArg){
+        ArrayList<Item> items = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
 
+
+        //String[] projection = {};
+        SQLiteQueryBuilder qb2 = new SQLiteQueryBuilder();
+        String selection = USER_INVENTORY_TABLE_NAME+"."+COL_FOREIGN_USER_ID+" = ?";
+        if(extraSelection != null){
+            selection += ", " + extraSelection;
+        }
+        String[] selectionArgs = {user.getUserId() + ""};
+        if(newArg.length > 0){
+            String[] result = Arrays.copyOf(selectionArgs, selectionArgs.length + newArg.length);
+            System.arraycopy(newArg, 0, result, selectionArgs.length, newArg.length);
+            selectionArgs = result;
+        }
+        qb2.setTables(ITEMS_TABLE_NAME + " INNER JOIN " + USER_INVENTORY_TABLE_NAME + " ON " +
+                ITEMS_TABLE_NAME + "." + COL_ITEM_ID + " = " + USER_INVENTORY_TABLE_NAME + "." +
+                COL_INVENTORY_ITEM_ID);
+
+        Cursor cursor = qb2.query(db, null, selection, selectionArgs, null, null, null);
+
+        if(cursor.moveToFirst()){
+            //should probably do this with setters...
+            while(!cursor.isAfterLast()){
+                try {
+                    items.add(processItem(cursor));
+                }
+                catch (Exception e){
+                    Log.e("DBHELPER", "getShopItems: ", e);
+                }
+
+                cursor.moveToNext();
+            }
+        }
+
+        cursor.close();
+        return items;
     }
 
-    public ArrayList<ShoppingCartItem> getShoppingCartItems(){
+    public ArrayList<ShoppingCartItem> getShoppingCartItems(ShoppingCart shoppingCart){
+        ArrayList<ShoppingCartItem> items = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
 
+
+        //String[] projection = {};
+        SQLiteQueryBuilder qb2 = new SQLiteQueryBuilder();
+        String selection = SHOPPING_CART_INVENTORY_TABLE_NAME+"."+COL_FOREIGN_SHOPPING_CART_ID+" = ?";
+        String[] selectionArgs = {shoppingCart.getShoppingCartId() + ""};
+        qb2.setTables(ITEMS_TABLE_NAME + " INNER JOIN " + SHOPPING_CART_INVENTORY_TABLE_NAME + " ON " +
+                ITEMS_TABLE_NAME + "." + COL_ITEM_ID + " = " + SHOPPING_CART_INVENTORY_TABLE_NAME + "." +
+                COL_SHOPPING_CART_ITEM_ID);
+
+        Cursor cursor = qb2.query(db, null, null, null, null, null, null);
+
+        if(cursor.moveToFirst()){
+            //should probably do this with setters...
+            while(!cursor.isAfterLast()){
+                try {
+                    ShoppingCartItem item = new ShoppingCartItem(processItem(cursor),
+                            cursor.getInt(cursor.getColumnIndex(COL_ITEM_AMOUNT)));
+                    items.add(item);
+                }
+                catch (Exception e){
+                    Log.e("DBHELPER", "getShopItems: ", e);
+                }
+
+                cursor.moveToNext();
+            }
+        }
+
+        cursor.close();
+        return items;
     }
 
-    public ArrayList<Item> getItemsByName(String name, int source){
-
+    public ArrayList<Item> getItemsByName(String name, User user){
+        String selection = COL_ITEM_NAME+" = ?";
+        String[] args = {name};
+        if(user == null){
+            return getShopItems(selection, args);
+        }
+        else{
+            return getInventoryItems(user, selection, args);
+        }
     }
 
-    public ArrayList<Item> getItemsByType(String type, int source){
-
+    public ArrayList<Item> getItemsByType(String type, User user){
+        String selection = COL_ITEM_TYPE+" = ?";
+        String[] args = {type};
+        if(user == null){
+            return getShopItems(selection, args);
+        }
+        else{
+            return getInventoryItems(user, selection, args);
+        }
     }
 
-    public ArrayList<Item> getItemsByQuality(int quality, int source){
-
+    public ArrayList<Item> getItemsByQuality(int quality, User user){
+        String selection = COL_ITEM_QUALITY+" = ?";
+        String[] args = {quality + ""};
+        if(user == null){
+            return getShopItems(selection, args);
+        }
+        else{
+            return getInventoryItems(user, selection, args);
+        }
     }
 
     //searches for items with a price within 10 gold of the entered number
-    public ArrayList<Item> getItemsByPrice(int price, int source){
-
+    public ArrayList<Item> getItemsByPrice(int price, User user){
+        String selection = COL_ITEM_PRICE+" = ?";
+        String[] args = {price + ""};
+        if(user == null){
+            return getShopItems(selection, args);
+        }
+        else{
+            return getInventoryItems(user, selection, args);
+        }
     }
 
-    public ArrayList<Item> getItemsByDescription(String description, int source){
+    public ArrayList<Item> getItemsByDescription(String description, User user){
+        String selection = COL_DESCRIPTION+" = ?";
+        String[] args = {description};
+        if(user == null){
+            return getShopItems(selection, args);
+        }
+        else{
+            return getInventoryItems(user, selection, args);
+        }
+    }
 
+
+    //method to take the cursor and return an Item object of the correct subclass
+    private Item processItem(Cursor cursor) throws Exception{
+        Item item;
+        int imageId = cursor.getInt(cursor.getColumnIndex(COL_ITEM_ID));
+        String name = cursor.getString(cursor.getColumnIndex(COL_ITEM_NAME));
+        String descrtiption = cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION));
+        String type = cursor.getString(cursor.getColumnIndex(COL_ITEM_TYPE));
+        String special = cursor.getString(cursor.getColumnIndex(COL_SPECIAL_ABILITY));
+        int price = cursor.getInt(cursor.getColumnIndex(COL_ITEM_PRICE));
+        int itemQuality = cursor.getInt(cursor.getColumnIndex(COL_ITEM_QUALITY));
+        Item.ItemQuality quality;
+        switch(itemQuality){
+            case 2:
+                quality = Item.ItemQuality.MAGICAL;
+                break;
+            case 1:
+                quality = Item.ItemQuality.STEEL;
+                break;
+            default:
+                quality = Item.ItemQuality.BRONZE;
+        }
+        int physicalAttack = cursor.getInt(cursor.getColumnIndex(COL_PHYSICAL_ATTACK));
+        int magicalAttack = cursor.getInt(cursor.getColumnIndex(COL_MAGIC_ATTACK));
+        int physicalDefense = cursor.getInt(cursor.getColumnIndex(COL_PHYSICAL_DEFENSE));
+        int magicalDefense = cursor.getInt(cursor.getColumnIndex(COL_MAGIC_DEFENSE));
+        int range = 0;
+        if(type.equals("Bow")){range = cursor.getInt(cursor.getColumnIndex(COL_RANGE))}
+
+        switch(type){
+            case "Accessory":
+                item = new Accessory(descrtiption, name, price, quality, magicalAttack,
+                        physicalAttack, physicalDefense, magicalDefense, special, imageId);
+                break;
+            case "Bow":
+                item = new Bow(descrtiption, name, price, quality, physicalAttack, magicalAttack, range, imageId);
+                break;
+            case "Breastplate":
+                item = new Breastplate(descrtiption, name, price, quality, physicalDefense, magicalDefense, imageId);
+                break;
+            case "Hat":
+                item = new Hat(descrtiption, name, price, quality, physicalDefense, magicalDefense, magicalAttack, special, imageId);
+                break;
+            case "Helm":
+                item = new Helm(descrtiption, name, price, quality, physicalDefense, magicalDefense, imageId);
+                break;
+            case "Robe":
+                item = new Robe(descrtiption, name, price, quality, physicalDefense, magicalDefense, magicalAttack, imageId);
+                break;
+            case "Shield":
+                item = new Shield(descrtiption, name, price, quality, physicalAttack, magicalAttack, range, physicalDefense, magicalDefense, imageId);
+                break;
+            case "Staff":
+                item = new Staff(descrtiption, name, price, quality, physicalAttack, magicalAttack, range, special, imageId);
+                break;
+            case "Sword":
+                item = new Sword(descrtiption, name, price, quality, physicalAttack, magicalAttack, range, imageId);
+                break;
+            default:
+                throw new Exception("Item has incorrect type of " + type);
+        }
+        return item;
     }
 }

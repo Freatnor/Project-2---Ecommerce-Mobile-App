@@ -39,4 +39,9 @@ public class Bow extends Weapon {
     public String getSpecialAbility() {
         return null;
     }
+
+    @Override
+    public String getType() {
+        return "Bow";
+    }
 }

@@ -22,7 +22,7 @@ public abstract class Weapon extends Item{
 
     public Weapon(String description, String name, int price, ItemQuality itemQuality, boolean owned, int physicalAttack,
                   int magicalAttack, int range, int imageId) {
-        super(description, name, price, itemQuality, owned, imageId);
+        super(description, name, price, itemQuality, imageId);
         mPhysicalAttack = physicalAttack;
         mMagicalAttack = magicalAttack;
         mRange = range;

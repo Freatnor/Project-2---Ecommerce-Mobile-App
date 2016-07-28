@@ -35,6 +35,11 @@ public class Shield extends Weapon {
         return null;
     }
 
+    @Override
+    public String getType() {
+        return "Shield";
+    }
+
     //heavily emphasizes defensive stats so these stats aren't important
     @Override
     public int getItemOptimizedOffensiveWeight() {

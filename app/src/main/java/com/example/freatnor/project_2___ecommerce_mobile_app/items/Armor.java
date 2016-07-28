@@ -20,7 +20,7 @@ public abstract class Armor extends Item {
 
     public Armor(String description, String name, int price, ItemQuality itemQuality, boolean owned,
                  int defense, int magicDefense, String slot, int imageId) {
-        super(description, name, price, itemQuality, owned, imageId);
+        super(description, name, price, itemQuality, imageId);
         mDefense = defense;
         mMagicDefense = magicDefense;
         this.mSlot = slot;

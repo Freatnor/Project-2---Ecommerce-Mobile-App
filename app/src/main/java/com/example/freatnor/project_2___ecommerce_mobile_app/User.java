@@ -39,10 +39,71 @@ public class User {
     }
 
     //method for loading from storage. will require a check of the user object returned to see if it worked well
-    public static User getUser(ArrayList<Item> inventory, HashMap<String, Item> equippedItems, int goldAmt){
+    public static User getUser(ArrayList<Item> inventory, int goldAmt){
         if(mInstance == null){
-            mInstance = new User(inventory, equippedItems, goldAmt, ShoppingCart.getInstance());
+            mInstance = new User(inventory, new HashMap<String, Item>(), goldAmt, ShoppingCart.getInstance(), 1);
         }
         return mInstance;
+    }
+
+    public int getUserId() {
+        return mUserId;
+    }
+
+    public String getUserName() {
+        return mUserName;
+    }
+
+    public int getGoldAmt() {
+        return mGoldAmt;
+    }
+
+    //methods for altering the slots for user equipment
+    public Item getHeadItem(){
+        return mEquippedItems.get("head");
+    }
+    
+    public void putHeadItem(Item item){
+        mEquippedItems.put("head", item);
+    }
+
+    public Item getChestItem(){
+        return mEquippedItems.get("chest");
+    }
+
+    public void putChestItem(Item item){
+        mEquippedItems.put("chest", item);
+    }
+
+    public Item getRightItem(){
+        return mEquippedItems.get("right");
+    }
+
+    public void putRightItem(Item item){
+        mEquippedItems.put("right", item);
+    }
+
+    public Item getLeftItem(){
+        return mEquippedItems.get("left");
+    }
+
+    public void putLeftItem(Item item){
+        mEquippedItems.put("left", item);
+    }
+
+    public Item getAccessory1Item(){
+        return mEquippedItems.get("accessory1");
+    }
+
+    public void putAccessory1Item(Item item){
+        mEquippedItems.put("accessory1", item);
+    }
+
+    public Item getAccessory2Item(){
+        return mEquippedItems.get("accessory2");
+    }
+
+    public void putAccessory2Item(Item item){
+        mEquippedItems.put("accessory2", item);
     }
 }

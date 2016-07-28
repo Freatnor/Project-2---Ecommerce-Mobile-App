@@ -78,4 +78,8 @@ public class ShoppingCart {
     public ArrayList<ShoppingCartItem> getItems() {
         return mItems;
     }
+
+    public int getShoppingCartId() {
+        return mShoppingCartId;
+    }
 }

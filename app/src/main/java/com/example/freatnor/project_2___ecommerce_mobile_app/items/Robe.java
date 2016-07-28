@@ -8,12 +8,9 @@ public class Robe extends Armor {
     private int mMagicAttack;
 
     //Robes are only for bodies, not heads!
-    public Robe(String description, String name, int price, ItemQuality itemQuality, int defense, int magicDefense, int imageId) {
+    public Robe(String description, String name, int price, ItemQuality itemQuality, int defense, int magicDefense, int magicAttack, int imageId) {
         super(description, name, price, itemQuality, defense, magicDefense, "chest", imageId);
-    }
-
-    public Robe(String description, String name, int price, ItemQuality itemQuality, boolean owned, int defense, int magicDefense, int imageId) {
-        super(description, name, price, itemQuality, owned, defense, magicDefense, "chest", imageId);
+        mMagicAttack = magicAttack;
     }
 
     //robes like hats have a magic attack modifier so they have some offensive value
@@ -34,11 +31,16 @@ public class Robe extends Armor {
 
     @Override
     public int getMagicalAttack() {
-        return 0;
+        return mMagicAttack;
     }
 
     @Override
     public String getSpecialAbility() {
         return null;
+    }
+
+    @Override
+    public String getType() {
+        return "Robe";
     }
 }

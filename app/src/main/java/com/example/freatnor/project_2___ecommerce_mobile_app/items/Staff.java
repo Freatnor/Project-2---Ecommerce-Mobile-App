@@ -23,6 +23,11 @@ public class Staff extends Weapon {
         return mSpecialAbility;
     }
 
+    @Override
+    public String getType() {
+        return "Staff";
+    }
+
     //Staff optimal weight, heavily emphasizes magic
     @Override
     public int getItemOptimizedOffensiveWeight() {

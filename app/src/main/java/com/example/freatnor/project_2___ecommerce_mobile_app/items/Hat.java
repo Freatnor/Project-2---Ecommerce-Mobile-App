@@ -30,6 +30,11 @@ public class Hat extends Armor {
         return mSpecialAbility;
     }
 
+    @Override
+    public String getType() {
+        return "Hat";
+    }
+
     //hats actually grant magic attack
     @Override
     public int getItemOptimizedOffensiveWeight() {

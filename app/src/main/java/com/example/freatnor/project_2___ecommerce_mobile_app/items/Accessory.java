@@ -25,7 +25,7 @@ public class Accessory extends Item {
 
     public Accessory(String description, String name, int price, ItemQuality itemQuality, boolean owned,
                      int magicAttack, int physicalAttack, int defense, int magicDefense, String specialAbility, int imageId) {
-        super(description, name, price, itemQuality, owned, imageId);
+        super(description, name, price, itemQuality, imageId);
         mMagicAttack = magicAttack;
         mPhysicalAttack = physicalAttack;
         mDefense = defense;
@@ -53,6 +53,11 @@ public class Accessory extends Item {
         return mSpecialAbility;
     }
 
+    @Override
+    public String getType() {
+        return "Accessory";
+    }
+
     public String getSlot() {
         return mSlot;
     }
@@ -68,4 +73,5 @@ public class Accessory extends Item {
     public int getItemOptimizedDefensiveWeight() {
         return mDefense + mMagicDefense;
     }
+
 }

@@ -35,6 +35,11 @@ public class Sword extends Weapon {
         return null;
     }
 
+    @Override
+    public String getType() {
+        return "Sword";
+    }
+
     //sword weight for optimized loadout that slightly favors physical attack
     @Override
     public int getItemOptimizedOffensiveWeight() {

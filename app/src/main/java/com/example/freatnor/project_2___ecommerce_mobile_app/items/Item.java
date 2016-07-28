@@ -82,4 +82,6 @@ public abstract class Item {
 
     public abstract String getSpecialAbility();
 
+    public abstract String getType();
+
 }
