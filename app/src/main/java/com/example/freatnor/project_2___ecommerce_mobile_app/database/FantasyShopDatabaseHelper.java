@@ -15,19 +15,19 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
     public static final int DB_VERSION = 1;
 
     public static final String USER_INVENTORY_TABLE_NAME = "user_inventory";
-    public static final String COL_ITEM_ID = "item_id";
+    public static final String COL_INVENTORY_ITEM_ID = "item_id";
     public static final String COL_FOREIGN_USER_ID = "user_id"; //These two create a unique key id
+
+    public static final String USER_TABLE_NAME = "user";
+    public static final String COL_USER_ID = "user_id";
+    public static final String COL_USER_NAME = "user_name";
+    public static final String COL_CURRENT_GOLD = "gold";
     public static final String COL_HEAD = "head_id";
     public static final String COL_CHEST = "chest_id";
     public static final String COL_RIGHT_HAND = "right_id";
     public static final String COL_LEFT_HAND = "left_id";
     public static final String COL_ACCESSORY1 = "acc1_id";
     public static final String COL_ACCESSORY2 = "acc2_id";
-
-    public static final String USER_TABLE_NAME = "user";
-    public static final String COL_USER_ID = "user_id";
-    public static final String COL_USER_NAME = "user_name";
-    public static final String COL_CURRENT_GOLD = "gold";
 
     public static final String SHOPPING_CART_TABLE_NAME = "shopping_cart";
     public static final String COL_SHOPPING_CART_ID = "shopping_cart_id";
@@ -39,7 +39,20 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_ITEM_AMOUNT = "item_amount";
 
     public static final String ITEMS_TABLE_NAME = "items";
-    public static final String COL_
+    public static final String COL_ITEM_ID = "item_id";
+    public static final String COL_DESCRIPTION = "description";
+    public static final String COL_ITEM_NAME = "name";
+    public static final String COL_ITEM_PRICE = "price";
+    public static final String COL_ITEM_QUALITY = "quality";
+    public static final String COL_ITEM_TYPE = "type";
+    public static final String COL_ITEM_SLOT = "slot";
+    public static final String COL_PHYSICAL_ATTACK = "physical_attack";
+    public static final String COL_MAGIC_ATTACK = "magical_attack";
+    public static final String COL_PHYSICAL_DEFENSE = "physical_defense";
+    public static final String COL_MAGIC_DEFENSE = "magical_defense";
+    public static final String COL_SPECIAL_ABILITY = "special_ability";
+    public static final String COL_RANGE = "range";
+
 
 
 
@@ -60,14 +73,89 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
         return mInstance;
     }
 
-    @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+    private static final String SQL_CREATE_ENTRIES_ITEMS = "CREATE TABLE " +
+            ITEMS_TABLE_NAME + " (" +
+            COL_ITEM_ID + " INTEGER PRIMARY KEY," +
+            COL_ITEM_NAME + " TEXT," +
+            COL_DESCRIPTION + " TEXT," +
+            COL_ITEM_PRICE + " INTEGER," +
+            COL_ITEM_QUALITY + " TEXT," +
+            COL_ITEM_TYPE + " TEXT," +
+            COL_ITEM_SLOT + " TEXT," +
+            COL_PHYSICAL_ATTACK + " INTEGER," +
+            COL_MAGIC_ATTACK + " INTEGER," +
+            COL_PHYSICAL_DEFENSE + " INTEGER," +
+            COL_MAGIC_DEFENSE + " INTEGER," +
+            COL_RANGE + " INTEGER," +
+            COL_SPECIAL_ABILITY + " TEXT" + ")";
 
+    private static final String SQL_CREATE_ENTRIES_USER = "CREATE TABLE " +
+            USER_TABLE_NAME + " (" +
+            COL_USER_ID + " INTEGER PRIMARY KEY," +
+            COL_USER_NAME + " TEXT," +
+            COL_CURRENT_GOLD + " INTEGER" +
+            COL_HEAD + " INTEGER," +
+            COL_CHEST + " INTEGER," +
+            COL_RIGHT_HAND + " INTEGER," +
+            COL_LEFT_HAND + " INTEGER," +
+            COL_ACCESSORY1 + " INTEGER," +
+            COL_ACCESSORY2 + " INTEGER" +
+            "FOREIGN KEY("+ COL_HEAD +") REFERENCES "+ ITEMS_TABLE_NAME+"("+ COL_USER_ID +") )," +
+            "FOREIGN KEY("+ COL_CHEST +") REFERENCES "+ ITEMS_TABLE_NAME+"("+ COL_USER_ID +") )," +
+            "FOREIGN KEY("+ COL_RIGHT_HAND +") REFERENCES "+ ITEMS_TABLE_NAME+"("+ COL_USER_ID +") )," +
+            "FOREIGN KEY("+ COL_LEFT_HAND +") REFERENCES "+ ITEMS_TABLE_NAME+"("+ COL_USER_ID +") )," +
+            "FOREIGN KEY("+ COL_ACCESSORY1 +") REFERENCES "+ ITEMS_TABLE_NAME+"("+ COL_USER_ID +") )," +
+            "FOREIGN KEY("+ COL_ACCESSORY2 +") REFERENCES "+ ITEMS_TABLE_NAME+"("+ COL_USER_ID +") )";
+
+    private static final String SQL_CREATE_ENTRIES_SHOPPING_CART = "CREATE TABLE " +
+            SHOPPING_CART_TABLE_NAME + " (" +
+            COL_SHOPPING_CART_ID + " INTEGER PRIMARY KEY," +
+            COL_SHOPPING_CART_USER + " INTEGER," +
+            "FOREIGN KEY("+ COL_SHOPPING_CART_USER +") REFERENCES "+ USER_TABLE_NAME+"("+ COL_USER_ID +") )";
+
+    private static final String SQL_CREATE_ENTRIES_SHOPPING_CART_INVENTORY = "CREATE TABLE " +
+            SHOPPING_CART_INVENTORY_TABLE_NAME + " (" +
+            COL_SHOPPING_CART_ITEM_ID + " INTEGER PRIMARY KEY," +
+            COL_FOREIGN_SHOPPING_CART_ID + " INTEGER PRIMARY KEY," +
+            COL_ITEM_AMOUNT + " INTEGER," +
+            "FOREIGN KEY("+ COL_SHOPPING_CART_ITEM_ID +") REFERENCES "+ ITEMS_TABLE_NAME+"("+ COL_USER_ID +") )," +
+            "FOREIGN KEY("+ COL_FOREIGN_SHOPPING_CART_ID +") REFERENCES "+ SHOPPING_CART_TABLE_NAME+"("+ COL_ITEM_ID +") )";
+
+    private static final String SQL_CREATE_ENTRIES_USER_INVENTORY = "CREATE TABLE " +
+            USER_INVENTORY_TABLE_NAME + " (" +
+            COL_INVENTORY_ITEM_ID + " INTEGER PRIMARY KEY," +
+            COL_FOREIGN_USER_ID + " INTEGER PRIMARY KEY," +
+            "FOREIGN KEY("+ COL_SHOPPING_CART_ITEM_ID +") REFERENCES "+ ITEMS_TABLE_NAME+"("+ COL_USER_ID +") )," +
+            "FOREIGN KEY("+ COL_FOREIGN_SHOPPING_CART_ID +") REFERENCES "+ SHOPPING_CART_TABLE_NAME+"("+ COL_ITEM_ID +") )";
+
+    private static final String SQL_DELETE_ENTRIES_ITEMS = "DROP TABLE IF EXISTS " +
+            ITEMS_TABLE_NAME;
+    private static final String SQL_DELETE_ENTRIES_USER = "DROP TABLE IF EXISTS " +
+            USER_TABLE_NAME;
+    private static final String SQL_DELETE_ENTRIES_SHOPPING_CART = "DROP TABLE IF EXISTS " +
+            SHOPPING_CART_TABLE_NAME;
+    private static final String SQL_DELETE_ENTRIES_SHOPPING_CART_INVENTORY = "DROP TABLE IF EXISTS " +
+            SHOPPING_CART_INVENTORY_TABLE_NAME;
+    private static final String SQL_DELETE_ENTRIES_USER_INVENTORY = "DROP TABLE IF EXISTS " +
+            USER_INVENTORY_TABLE_NAME;
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(SQL_CREATE_ENTRIES_ITEMS);
+        db.execSQL(SQL_CREATE_ENTRIES_USER);
+        db.execSQL(SQL_CREATE_ENTRIES_SHOPPING_CART);
+        db.execSQL(SQL_CREATE_ENTRIES_SHOPPING_CART_INVENTORY);
+        db.execSQL(SQL_CREATE_ENTRIES_USER_INVENTORY);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL(SQL_DELETE_ENTRIES_ITEMS);
+        db.execSQL(SQL_DELETE_ENTRIES_USER);
+        db.execSQL(SQL_DELETE_ENTRIES_SHOPPING_CART);
+        db.execSQL(SQL_DELETE_ENTRIES_SHOPPING_CART_INVENTORY);
+        db.execSQL(SQL_DELETE_ENTRIES_USER_INVENTORY);
+        onCreate(db);
     }
 
     public Cursor getShopItems(){

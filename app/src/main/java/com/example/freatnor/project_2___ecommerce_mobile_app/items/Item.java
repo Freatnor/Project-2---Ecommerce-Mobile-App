@@ -32,7 +32,6 @@ public abstract class Item {
     private String mName;
     private int mPrice;
     private ItemQuality mItemQuality;
-    private boolean mOwned;
     private int mImageId;
 
     public Item(String description, String name, int price, ItemQuality itemQuality, int imageId) {
@@ -40,19 +39,6 @@ public abstract class Item {
         mName = name;
         mPrice = price;
         mItemQuality = itemQuality;
-        mImageId = imageId;
-        mOwned = false;
-    }
-
-    /**
-     * Special Constructor for loading from storage
-     */
-    public Item(String description, String name, int price, ItemQuality itemQuality, boolean owned, int imageId) {
-        mDescription = description;
-        mName = name;
-        mPrice = price;
-        mItemQuality = itemQuality;
-        mOwned = owned;
         mImageId = imageId;
     }
 
@@ -70,14 +56,6 @@ public abstract class Item {
 
     public ItemQuality getItemQuality() {
         return mItemQuality;
-    }
-
-    public boolean isOwned() {
-        return mOwned;
-    }
-
-    public void setOwned(boolean owned) {
-        mOwned = owned;
     }
 
     public int getImageId() {
