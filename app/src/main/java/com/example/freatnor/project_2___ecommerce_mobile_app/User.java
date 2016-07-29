@@ -22,18 +22,17 @@ public class User {
 
     private static User mInstance;
 
-    private User(ArrayList<Item> inventory, HashMap<String, Item> equippedItems, int goldAmt, ShoppingCart shoppingCart, int userId) {
+    private User(ArrayList<Item> inventory, HashMap<String, Item> equippedItems, int goldAmt, int userId) {
         mInventory = inventory;
         mEquippedItems = equippedItems;
         mGoldAmt = goldAmt;
-        mShoppingCart = shoppingCart;
         mUserName = "Default";
         mUserId = userId;
     }
 
     public static User getUser(){
         if(mInstance == null){
-            mInstance = new User(new ArrayList<Item>(), new HashMap<String, Item>(), 0, ShoppingCart.getInstance(), 1);
+            mInstance = new User(new ArrayList<Item>(), new HashMap<String, Item>(), 500, 1);
         }
         return mInstance;
     }
@@ -41,7 +40,7 @@ public class User {
     //method for loading from storage. will require a check of the user object returned to see if it worked well
     public static User getUser(ArrayList<Item> inventory, int goldAmt){
         if(mInstance == null){
-            mInstance = new User(inventory, new HashMap<String, Item>(), goldAmt, ShoppingCart.getInstance(), 1);
+            mInstance = new User(inventory, new HashMap<String, Item>(), goldAmt, 1);
         }
         return mInstance;
     }

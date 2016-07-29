@@ -28,7 +28,7 @@ public class ShopActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ShopFragment.OnAddToCartListener,
         ShopFragment.OnDetailRequestedListener {
 
-    private static final String ITEM_TO_ADD = "Item_to_Add";
+    public static final String ITEM_TO_ADD = "Item_to_Add";
     private FantasyShopDatabaseHelper mHelper;
 
     private RelativeLayout mFragmentContainer;
@@ -57,7 +57,7 @@ public class ShopActivity extends AppCompatActivity
         mHelper.insertItems(items, null);
 
         mHelper.insertOrUpdateUser(User.getUser(), null);
-        mHelper.insertShoppingCart(ShoppingCart.getInstance(), null);
+        mHelper.insertShoppingCart(ShoppingCart.getInstance(this), null);
 
         mFragmentContainer = (RelativeLayout) findViewById(R.id.shop_fragment_container);
 
@@ -147,7 +147,7 @@ public class ShopActivity extends AppCompatActivity
     @Override
     public void onAddToCart(int position) {
         Intent intent = new Intent(ShopActivity.this, ShoppingCartActivity.class);
-        intent.putExtra(ITEM_TO_ADD, position);
+        intent.putExtra(ITEM_TO_ADD, mItems.get(position).getName());
         startActivity(intent);
     }
 
@@ -162,7 +162,7 @@ public class ShopActivity extends AppCompatActivity
                             @Override
                             public void onClick(View view) {
                                 Intent intent = new Intent(ShopActivity.this, ShoppingCartActivity.class);
-                                intent.putExtra(ITEM_TO_ADD, position);
+                                intent.putExtra(ITEM_TO_ADD, mItems.get(position).getName());
                                 startActivity(intent);
                             }
                         }))

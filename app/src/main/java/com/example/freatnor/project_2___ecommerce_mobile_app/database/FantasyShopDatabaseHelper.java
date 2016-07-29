@@ -346,6 +346,7 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
         ArrayList<Item> items = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
 
+
         Cursor cursor = db.query(ITEMS_TABLE_NAME, null, extraSelection, newArg, null, null, null);
 
         if(cursor.moveToFirst()){
@@ -444,6 +445,7 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
         return items;
     }
 
+    //a null user pulls from the shop, otherwise from inventory of that specific user
     public ArrayList<Item> getItemsByName(String name, User user){
         String selection = COL_ITEM_NAME+" = ?";
         String[] args = {name};

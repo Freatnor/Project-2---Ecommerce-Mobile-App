@@ -27,32 +27,39 @@ implements ShoppingCart.ShoppingCartChangeListener {
 
     private ShoppingCart mCart;
 
+    public interface ShoppingCartTotalChangeListener{
+        void onTotalChange();
+    }
 
+    private ShoppingCartTotalChangeListener mListener;
 
-    public ShoppingCartItemRecyclerViewAdapter(){
-        super();
+    public ShoppingCartItemRecyclerViewAdapter(Context context, ShoppingCartTotalChangeListener listener){
+        mCart = ShoppingCart.getInstance(context);
+        mCart.setListener(this);
+        mListener = listener;
     }
 
     @Override
     public CartItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View parentView = LayoutInflater.from(parent.getContext()).inflate(R.layout.shop_recycle_inner_content,
+        View parentView = LayoutInflater.from(parent.getContext()).inflate(R.layout.shopping_cart_recycle_inner_content,
                 parent, false);
         return new CartItemViewHolder(parentView);
     }
 
     @Override
     public void onBindViewHolder(CartItemViewHolder holder, final int position) {
-        mCart = ShoppingCart.getInstance(holder.getContext());
         holder.setDecrementOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mCart.decrementItem(position);
+                mListener.onTotalChange();
             }
         });
         holder.setIncrementOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mCart.incrementItem(position);
+                mListener.onTotalChange();
             }
         });
         holder.setButtonOnClickListener(new View.OnClickListener() {
@@ -114,13 +121,13 @@ implements ShoppingCart.ShoppingCartChangeListener {
         public CartItemViewHolder(View itemView) {
             super(itemView);
             mItemIcon = (ImageView) itemView.findViewById(R.id.item_image_container);
-            mItemName = (TextView) itemView.findViewById(R.id.shop_recycler_item_name);
+            mItemName = (TextView) itemView.findViewById(R.id.cart_item_recycler_item_name);
 
             mDecrement = (ImageButton) itemView.findViewById((R.id.cart_decrement));
             mIncrement = (ImageButton) itemView.findViewById((R.id.cart_increment));
             mItemNumber = (TextView) itemView.findViewById(R.id.cart_item_amount);
 
-            mItemTotalPrice = (TextView) itemView.findViewById(R.id.shop_recycler_price_text_view);
+            mItemTotalPrice = (TextView) itemView.findViewById(R.id.cart_item_recycler_price_text_view);
 
             mButton = (Button) itemView.findViewById(R.id.remove_from_cart_button);
         }

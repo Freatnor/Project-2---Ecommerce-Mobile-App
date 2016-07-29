@@ -63,7 +63,7 @@ public class ShoppingCart {
         ShoppingCartItem newItem = new ShoppingCartItem(item, numItems);
         mItems.add(newItem);
         mHelper.insertOrUpdateShoppingCartItem(new ShoppingCartItem(item, numItems), null);
-        mListener.notifyCartItemAdded(mItems.indexOf(newItem));
+        mListener.notifyCartItemAdded(mItems.size() - 1);
     }
 
     public ShoppingCartItem getItem(int position){

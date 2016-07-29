@@ -1,6 +1,7 @@
 package com.example.freatnor.project_2___ecommerce_mobile_app;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,7 +26,7 @@ import com.example.freatnor.project_2___ecommerce_mobile_app.recyclerviewclasses
 import com.example.freatnor.project_2___ecommerce_mobile_app.recyclerviewclasses.ShoppingCartItemRecyclerViewAdapter;
 
 public class ShoppingCartActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ShoppingCartItemRecyclerViewAdapter.ShoppingCartTotalChangeListener {
 
     private ShoppingCart mCart;
 
@@ -47,28 +48,37 @@ public class ShoppingCartActivity extends AppCompatActivity
 
         mRecyclerView = (RecyclerView) findViewById(R.id.shopping_cart_recycler_view);
         mTotalPrice = (TextView) findViewById(R.id.shopping_cart_total_price_text_view);
-        mTotalPrice.setText(mCart.getTotalPrice() + "");
         mPurchaseButton = (Button) findViewById(R.id.purchase_button);
 
-        mAdapter = new ShoppingCartItemRecyclerViewAdapter();
+        mAdapter = new ShoppingCartItemRecyclerViewAdapter(this, this);
         mManager = new LinearLayoutManager(ShoppingCartActivity.this, LinearLayoutManager.VERTICAL, false);
+
+        //if there's any intent data passed then add that to the cart
+        Intent intent = getIntent();
+        if(intent.hasExtra(ShopActivity.ITEM_TO_ADD)){
+            mCart.addItem(FantasyShopDatabaseHelper.getInstance(this).getItemsByName(
+                    intent.getStringExtra(ShopActivity.ITEM_TO_ADD), null).get(0), 1);
+        }
 
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mManager);
 
+        mTotalPrice.setText(mCart.getTotalPrice() + "");
+
+        //create on click for dialog to prompt user about buying the cart
         mPurchaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ShoppingCartActivity.this);
-                String message = "";
-                String title = "Add new ";
+                String message = "Are you sure you wish to purchase these items?";
+                String title = "Purchase Items";
                 builder.setMessage(message)
                         .setTitle(title)
                         .setPositiveButton("Purchase", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 if(User.getUser().getGoldAmt() < mCart.getTotalPrice()){
-                                    Toast.makeText(ShoppingCartActivity.this, "Insufficient Funds!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ShoppingCartActivity.this, "Insufficient Funds! You only have " + User.getUser().getGoldAmt() + " Gold.", Toast.LENGTH_SHORT).show();
                                 }
                                 else {
                                     User.getUser().spendGold(mCart.getTotalPrice());
@@ -147,5 +157,10 @@ public class ShoppingCartActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onTotalChange() {
+        mTotalPrice.setText(mCart.getTotalPrice() + "");
     }
 }

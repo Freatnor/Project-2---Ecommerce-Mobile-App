@@ -75,7 +75,7 @@ public class ShopFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mTotalPrice.setText(ShoppingCart.getInstance().getTotalPrice() + "");
+        mTotalPrice.setText(ShoppingCart.getInstance(this.getContext()).getTotalPrice() + "");
         mGoToCartButton.setOnClickListener(mListener);
 
         mRecyclerView.setAdapter(mAdapter);
