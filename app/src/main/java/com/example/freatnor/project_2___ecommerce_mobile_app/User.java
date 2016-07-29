@@ -58,6 +58,14 @@ public class User {
         return mGoldAmt;
     }
 
+    public void addGold(){
+        mGoldAmt += 5000;
+    }
+
+    public void spendGold(int goldAmt){
+        mGoldAmt -= goldAmt;
+    }
+
     //methods for altering the slots for user equipment
     public Item getHeadItem(){
         return mEquippedItems.get("head");

@@ -1,8 +1,10 @@
 package com.example.freatnor.project_2___ecommerce_mobile_app;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -16,8 +18,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.freatnor.project_2___ecommerce_mobile_app.database.FantasyShopDatabaseHelper;
 import com.example.freatnor.project_2___ecommerce_mobile_app.recyclerviewclasses.ItemRecyclerViewAdapter;
+import com.example.freatnor.project_2___ecommerce_mobile_app.recyclerviewclasses.ShoppingCartItemRecyclerViewAdapter;
 
 public class ShoppingCartActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -28,7 +33,7 @@ public class ShoppingCartActivity extends AppCompatActivity
     private TextView mTotalPrice;
     private Button mPurchaseButton;
 
-    private ItemRecyclerViewAdapter mAdapter;
+    private ShoppingCartItemRecyclerViewAdapter mAdapter;
     private LinearLayoutManager mManager;
 
     @Override
@@ -38,14 +43,14 @@ public class ShoppingCartActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mCart = ShoppingCart.getInstance();
+        mCart = ShoppingCart.getInstance(this);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.shopping_cart_recycler_view);
         mTotalPrice = (TextView) findViewById(R.id.shopping_cart_total_price_text_view);
         mTotalPrice.setText(mCart.getTotalPrice() + "");
         mPurchaseButton = (Button) findViewById(R.id.purchase_button);
 
-        mAdapter = new ItemRecyclerViewAdapter(mAddToCartListener, mDetailListener, mItems);
+        mAdapter = new ShoppingCartItemRecyclerViewAdapter();
         mManager = new LinearLayoutManager(ShoppingCartActivity.this, LinearLayoutManager.VERTICAL, false);
 
         mRecyclerView.setAdapter(mAdapter);
@@ -54,7 +59,26 @@ public class ShoppingCartActivity extends AppCompatActivity
         mPurchaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                AlertDialog.Builder builder = new AlertDialog.Builder(ShoppingCartActivity.this);
+                String message = "";
+                String title = "Add new ";
+                builder.setMessage(message)
+                        .setTitle(title)
+                        .setPositiveButton("Purchase", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                if(User.getUser().getGoldAmt() < mCart.getTotalPrice()){
+                                    Toast.makeText(ShoppingCartActivity.this, "Insufficient Funds!", Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    User.getUser().spendGold(mCart.getTotalPrice());
+                                    mCart.purchaseItems();
+                                }
+                            }
+                        })
+                        .setNegativeButton("Cancel", null);
+                builder.create();
+                builder.show();
             }
         });
 

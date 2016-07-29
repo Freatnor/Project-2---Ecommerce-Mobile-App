@@ -7,11 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.freatnor.project_2___ecommerce_mobile_app.R;
 import com.example.freatnor.project_2___ecommerce_mobile_app.ShopFragment;
+import com.example.freatnor.project_2___ecommerce_mobile_app.ShoppingCart;
 import com.example.freatnor.project_2___ecommerce_mobile_app.ShoppingCartItem;
 import com.example.freatnor.project_2___ecommerce_mobile_app.items.Item;
 
@@ -20,119 +22,107 @@ import java.util.ArrayList;
 /**
  * Created by Jonathan Taylor on 7/27/16.
  */
-public class ShoppingCartItemRecyclerViewAdapter extends Adapter<ShoppingCartItemRecyclerViewAdapter.ItemViewHolder> {
+public class ShoppingCartItemRecyclerViewAdapter extends Adapter<ShoppingCartItemRecyclerViewAdapter.CartItemViewHolder>
+implements ShoppingCart.ShoppingCartChangeListener {
 
-    private ArrayList<ShoppingCartItem> items;
+    private ShoppingCart mCart;
 
 
 
-    public ShoppingCartItemRecyclerViewAdapter(ArrayList<ShoppingCartItem> items){
-        this.items = items;
+    public ShoppingCartItemRecyclerViewAdapter(){
+        super();
     }
 
     @Override
-    public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CartItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View parentView = LayoutInflater.from(parent.getContext()).inflate(R.layout.shop_recycle_inner_content,
                 parent, false);
-        return new ItemViewHolder(parentView);
+        return new CartItemViewHolder(parentView);
     }
 
     @Override
-    public void onBindViewHolder(ItemViewHolder holder, final int position) {
-        holder.setViewOnClickListener(new View.OnClickListener() {
+    public void onBindViewHolder(CartItemViewHolder holder, final int position) {
+        mCart = ShoppingCart.getInstance(holder.getContext());
+        holder.setDecrementOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mDetailListener.detailRequested(position);
+                mCart.decrementItem(position);
+            }
+        });
+        holder.setIncrementOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCart.incrementItem(position);
             }
         });
         holder.setButtonOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mAddToCartListener.onAddToCart(position);
+                mCart.removeItem(position);
             }
         });
 
-        holder.setItemName(items.get(position).getName());
-        holder.setItemIcon(holder.getContext().getResources().getIdentifier(items.get(position).getImageId(),
-                "drawable", holder.getContext().getPackageName()));
-        holder.setItemPrice(items.get(position).getPrice());
-        holder.setItemPAtkValue(items.get(position).getPhysicalAttack());
-        holder.setItemMAtkValue(items.get(position).getMagicalAttack());
-        holder.setItemPDefValue(items.get(position).getPhysicalDefense());
-        holder.setItemMDefValue(items.get(position).getMagicalDefense());
+        holder.setItemName(mCart.getItem(position).getItem().getName());
+        holder.setItemIcon(holder.getContext().getResources().getIdentifier(mCart.getItem(position).
+                getItem().getImageId(), "drawable", holder.getContext().getPackageName()));
+        holder.setItemTotalPrice(mCart.getItem(position).getTotalPrice());
+        holder.setItemNumber(mCart.getItem(position).getNumItems());
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return mCart.size();
     }
 
-    //method to reload the view
-    public void refreshItemList(ArrayList<Item> newItems){
-        items = newItems;
+
+    //interface methods, possibly need to update the totalPrice at bottom separately
+    @Override
+    public void notifyCartItemDeleted(int position) {
+        notifyItemRemoved(position);
+    }
+
+    @Override
+    public void notifyCartItemAdded(int position) {
+        notifyItemInserted(position);
+    }
+
+    @Override
+    public void notifyCartCleared() {
         notifyDataSetChanged();
     }
 
+    @Override
+    public void notifyCartItemChanged(int position){
+        notifyItemChanged(position);
+    }
 
-    public class ItemViewHolder extends RecyclerView.ViewHolder{
+
+
+    public class CartItemViewHolder extends RecyclerView.ViewHolder{
 
         private ImageView mItemIcon;
         private TextView mItemName;
 
-        private TextView mItemPAtkValue;
-        private TextView mItemMAtkValue;
-        private TextView mItemPDefValue;
-        private TextView mItemMDefValue;
+        private ImageButton mDecrement;
+        private ImageButton mIncrement;
+        private TextView mItemNumber;
 
-        private TextView mItemPrice;
+        private TextView mItemTotalPrice;
         private Button mButton;
 
 
-        public ItemViewHolder(View itemView) {
+        public CartItemViewHolder(View itemView) {
             super(itemView);
             mItemIcon = (ImageView) itemView.findViewById(R.id.item_image_container);
             mItemName = (TextView) itemView.findViewById(R.id.shop_recycler_item_name);
 
-            mItemPAtkValue = (TextView) itemView.findViewById(R.id.physical_attack_value);
-            mItemMAtkValue = (TextView) itemView.findViewById(R.id.magical_attack_value);
-            mItemPDefValue = (TextView) itemView.findViewById(R.id.physical_defense_value);
-            mItemMDefValue = (TextView) itemView.findViewById(R.id.magical_defense_value);
+            mDecrement = (ImageButton) itemView.findViewById((R.id.cart_decrement));
+            mIncrement = (ImageButton) itemView.findViewById((R.id.cart_increment));
+            mItemNumber = (TextView) itemView.findViewById(R.id.cart_item_amount);
 
-            mItemPrice = (TextView) itemView.findViewById(R.id.shop_recycler_price_text_view);
+            mItemTotalPrice = (TextView) itemView.findViewById(R.id.shop_recycler_price_text_view);
 
-            mButton = (Button) itemView.findViewById(R.id.add_to_cart_button);
-        }
-
-        public String getItemPAtkValue() {
-            return mItemPAtkValue.getText().toString();
-        }
-
-        public void setItemPAtkValue(int itemPAtkValue) {
-            mItemPAtkValue.setText(itemPAtkValue + "");
-        }
-
-        public String getItemMAtkValue() {
-            return mItemMAtkValue.getText().toString();
-        }
-
-        public void setItemMAtkValue(int itemMAtkValue) {
-            mItemMAtkValue.setText(itemMAtkValue + "");
-        }
-
-        public String getItemPDefValue() {
-            return mItemPDefValue.getText().toString();
-        }
-
-        public void setItemPDefValue(int itemPDefValue) {
-            mItemPDefValue.setText(itemPDefValue + "");
-        }
-
-        public String getItemMDefValue() {
-            return mItemMDefValue.getText().toString();
-        }
-
-        public void setItemMDefValue(int itemMDefValue) {
-            mItemMDefValue.setText(itemMDefValue + "");
+            mButton = (Button) itemView.findViewById(R.id.remove_from_cart_button);
         }
 
         public void setItemIcon(int itemIcon) {
@@ -143,13 +133,21 @@ public class ShoppingCartItemRecyclerViewAdapter extends Adapter<ShoppingCartIte
             mItemName.setText(itemName);
         }
 
-        public void setItemPrice(int itemPrice) {
-            mItemPrice.setText(itemPrice + "");
+        public void setItemTotalPrice(int itemPrice) {
+            mItemTotalPrice.setText(itemPrice + "");
         }
 
-        //for setting the detail view on click listener
-        public void setViewOnClickListener(View.OnClickListener listener){
-            itemView.setOnClickListener(listener);
+        public void setItemNumber(int itemNumber){
+            mItemNumber.setText(itemNumber + "");
+        }
+
+        //for setting the increment/decrement view on click listeners
+        public void setDecrementOnClickListener(View.OnClickListener listener){
+            mDecrement.setOnClickListener(listener);
+        }
+
+        public void setIncrementOnClickListener(View.OnClickListener listener){
+            mIncrement.setOnClickListener(listener);
         }
 
         //for setting the add to cart listener
@@ -160,5 +158,7 @@ public class ShoppingCartItemRecyclerViewAdapter extends Adapter<ShoppingCartIte
         public Context getContext(){
             return mButton.getContext();
         }
+
+
     }
 }
