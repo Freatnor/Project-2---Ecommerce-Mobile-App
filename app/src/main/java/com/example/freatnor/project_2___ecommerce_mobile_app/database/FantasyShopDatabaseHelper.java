@@ -378,14 +378,23 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
         //String[] projection = {};
         SQLiteQueryBuilder qb2 = new SQLiteQueryBuilder();
         String selection = USER_INVENTORY_TABLE_NAME+"."+COL_FOREIGN_USER_ID+" = ?";
+        String[] selectionArgs;
         if(extraSelection != null){
             selection += ", " + extraSelection;
         }
-        String[] selectionArgs = {user.getUserId() + ""};
-        if(newArg.length > 0){
+        if(user != null) {
+            selectionArgs = new String[]{user.getUserId() + ""};
+        }
+        else{
+            selectionArgs = null;
+        }
+        if(newArg != null && selectionArgs != null){
             String[] result = Arrays.copyOf(selectionArgs, selectionArgs.length + newArg.length);
             System.arraycopy(newArg, 0, result, selectionArgs.length, newArg.length);
             selectionArgs = result;
+        }
+        else if(newArg != null && selectionArgs == null){
+            selectionArgs = newArg;
         }
         qb2.setTables(ITEMS_TABLE_NAME + " INNER JOIN " + USER_INVENTORY_TABLE_NAME + " ON " +
                 ITEMS_TABLE_NAME + "." + COL_ITEM_NAME + " = " + USER_INVENTORY_TABLE_NAME + "." +
@@ -506,16 +515,19 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
     //gets a user from the helper if one exists
     public User getUser(){
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(USER_TABLE_NAME, null, "WHERE " + COL_USER_ID + " = ?",
-                new String[]{"1"}, null, null, null);
+        Cursor cursor = db.query(USER_TABLE_NAME, null, COL_USER_ID + " = ?",
+                new String[]{User.getUser(this) + ""}, null, null, null);
         HashMap<String, Item> map = new HashMap<>();
-        map.put("head", getItemsByName(cursor.getString(cursor.getColumnIndex(COL_HEAD)), null).get(0));
-        map.put("chest", getItemsByName(cursor.getString(cursor.getColumnIndex(COL_CHEST)), null).get(0));
-        map.put("right", getItemsByName(cursor.getString(cursor.getColumnIndex(COL_RIGHT_HAND)), null).get(0));
-        map.put("left", getItemsByName(cursor.getString(cursor.getColumnIndex(COL_LEFT_HAND)), null).get(0));
-        map.put("accessory1", getItemsByName(cursor.getString(cursor.getColumnIndex(COL_ACCESSORY1)), null).get(0));
-        map.put("accessory2", getItemsByName(cursor.getString(cursor.getColumnIndex(COL_ACCESSORY2)), null).get(0));
-        int gold = cursor.getInt(cursor.getColumnIndex(COL_CURRENT_GOLD));
+        int gold = 0;
+        if(cursor.moveToFirst()) {
+            map.put("head", getItemsByName(cursor.getString(cursor.getColumnIndex(COL_HEAD)), null).get(0));
+            map.put("chest", getItemsByName(cursor.getString(cursor.getColumnIndex(COL_CHEST)), null).get(0));
+            map.put("right", getItemsByName(cursor.getString(cursor.getColumnIndex(COL_RIGHT_HAND)), null).get(0));
+            map.put("left", getItemsByName(cursor.getString(cursor.getColumnIndex(COL_LEFT_HAND)), null).get(0));
+            map.put("accessory1", getItemsByName(cursor.getString(cursor.getColumnIndex(COL_ACCESSORY1)), null).get(0));
+            map.put("accessory2", getItemsByName(cursor.getString(cursor.getColumnIndex(COL_ACCESSORY2)), null).get(0));
+            gold = cursor.getInt(cursor.getColumnIndex(COL_CURRENT_GOLD));
+        }
         
         return User.getUser(getInventoryItems(null, null, null), map, gold, 1, this);
     }

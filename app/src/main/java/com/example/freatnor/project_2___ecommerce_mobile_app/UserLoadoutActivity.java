@@ -16,24 +16,28 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.freatnor.project_2___ecommerce_mobile_app.database.FantasyShopDatabaseHelper;
 import com.example.freatnor.project_2___ecommerce_mobile_app.items.Item;
 
 import java.util.ArrayList;
 
-public class UserLoadoutActivity extends AppCompatActivity {
+public class UserLoadoutActivity extends AppCompatActivity implements UserLoadoutFragment.OnSlotClickedListener, NavigationView.OnNavigationItemSelectedListener,
+        ShopFragment.OnDetailRequestedListener{
 
     private User mUser;
 
     private UserLoadoutFragment mFragment;
+    private UserLoadoutListFragment mLoadoutListFragment;
+
     private RelativeLayout mFragmentContainer;
     private SearchView mSearchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.app_bar_user_loadout);
+        setContentView(R.layout.activity_user_loadout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -51,7 +55,7 @@ public class UserLoadoutActivity extends AppCompatActivity {
 
 
         //set up the inner fragment
-        mFragment = UserLoadoutFragment.getInstance(listener, this, this, this, mItems);
+        mFragment = UserLoadoutFragment.getInstance(mUser, this, this);
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.loadout_activity_fragment_container, mFragment)
@@ -91,11 +95,11 @@ public class UserLoadoutActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String s) {
                 if (s != null) {
                     if (s.isEmpty()) {
-                        ArrayList<Item> newItems = mHelper.getShopItems(null, null);
-                        mFragment.refreshItemList(newItems);
+                        ArrayList<Item> newItems = FantasyShopDatabaseHelper.getInstance(UserLoadoutActivity.this).getInventoryItems(mUser,null, null);
+                        mLoadoutListFragment.refreshItemList(newItems);
                     } else {
-                        ArrayList<Item> newItems = mHelper.getItemsByName(s, null);
-                        mFragment.refreshItemList(newItems);
+                        ArrayList<Item> newItems = FantasyShopDatabaseHelper.getInstance(UserLoadoutActivity.this).getItemsByName(s, mUser);
+                        mLoadoutListFragment.refreshItemList(newItems);
                     }
                 }
                 return true;
@@ -148,8 +152,8 @@ public class UserLoadoutActivity extends AppCompatActivity {
 
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            ArrayList<Item> newItems = mHelper.getItemsByName(query, null);
-            mFragment.refreshItemList(newItems);
+            ArrayList<Item> newItems = FantasyShopDatabaseHelper.getInstance(UserLoadoutActivity.this).getItemsByName(query, mUser);
+            mLoadoutListFragment.refreshItemList(newItems);
         }
     }
 
@@ -158,16 +162,68 @@ public class UserLoadoutActivity extends AppCompatActivity {
     public void detailRequested(final int position) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .addToBackStack("ShopFragment")
-                .replace(R.id.shop_fragment_container,
-                        ItemDetailFragment.getInstance(mItems.get(position), true, new View.OnClickListener() {
+                .addToBackStack("LoadoutFragment")
+                .replace(R.id.loadout_activity_fragment_container,
+                        ItemDetailFragment.getInstance(mUser.get(position), false, new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent intent = new Intent(ShopActivity.this, ShoppingCartActivity.class);
-                                intent.putExtra(ITEM_TO_ADD, mItems.get(position).getName());
-                                startActivity(intent);
+                                String slot = mUser.get(position).getSlot();
+                                switch(slot){
+                                    case "head":
+                                        mUser.putHeadItem(mUser.get(position));
+                                        mFragment.updateSlot(slot);
+                                        break;
+                                    case "chest":
+                                        mUser.putChestItem(mUser.get(position));
+                                        mFragment.updateSlot(slot);
+                                        break;
+                                    case "hand":
+                                        mUser.putRightItem(mUser.get(position));
+                                        mFragment.updateSlot(slot);
+                                        break;
+                                    case "accessory":
+                                        mUser.putAccessory1Item(mUser.get(position));
+                                        mFragment.updateSlot(slot);
+                                        break;
+                                    default:
+                                        Toast.makeText(UserLoadoutActivity.this, "What did you choose?", Toast.LENGTH_SHORT).show();
+                                }
+                                getSupportFragmentManager().popBackStack();
                             }
                         }))
                 .commit();
+    }
+
+    @Override
+    public void onSlotItemClicked(String slot, Item item) {
+        switch(slot){
+            case "head":
+                mUser.putHeadItem(item);
+                mFragment.updateSlot(slot);
+                break;
+            case "chest":
+                mUser.putChestItem(item);
+                mFragment.updateSlot(slot);
+                break;
+            case "right":
+                mUser.putRightItem(item);
+                mFragment.updateSlot(slot);
+                break;
+            case "left":
+                mUser.putLeftItem(item);
+                mFragment.updateSlot(slot);
+                break;
+            case "accessory1":
+                mUser.putAccessory1Item(item);
+                mFragment.updateSlot(slot);
+                break;
+            case "accessory2":
+                mUser.putAccessory2Item(item);
+                mFragment.updateSlot(slot);
+                break;
+            default:
+                Toast.makeText(UserLoadoutActivity.this, "What did you choose?", Toast.LENGTH_SHORT).show();
+        }
+        getSupportFragmentManager().popBackStack();
     }
 }

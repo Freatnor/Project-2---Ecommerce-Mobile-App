@@ -86,11 +86,11 @@ public class ShoppingCartActivity extends AppCompatActivity
                         .setPositiveButton("Purchase", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                if(User.getUser().getGoldAmt() < mCart.getTotalPrice()){
-                                    Toast.makeText(ShoppingCartActivity.this, "Insufficient Funds! You only have " + User.getUser().getGoldAmt() + " Gold.", Toast.LENGTH_SHORT).show();
+                                if(User.getUser(FantasyShopDatabaseHelper.getInstance(ShoppingCartActivity.this)).getGoldAmt() < mCart.getTotalPrice()){
+                                    Toast.makeText(ShoppingCartActivity.this, "Insufficient Funds! You only have " + User.getUser(FantasyShopDatabaseHelper.getInstance(ShoppingCartActivity.this)).getGoldAmt() + " Gold.", Toast.LENGTH_SHORT).show();
                                 }
                                 else {
-                                    User.getUser().spendGold(mCart.getTotalPrice());
+                                    User.getUser(FantasyShopDatabaseHelper.getInstance(ShoppingCartActivity.this)).spendGold(mCart.getTotalPrice());
                                     mCart.purchaseItems();
                                     startActivity(new Intent(ShoppingCartActivity.this, UserLoadoutActivity.class));
                                 }

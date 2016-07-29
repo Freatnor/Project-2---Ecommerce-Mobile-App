@@ -203,6 +203,8 @@
     <FrameLayout
         android:id="@+id/loadout_fragment_inner_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></FrameLayout>
+        android:layout_height="wrap_content">
+
+    </FrameLayout>
 
 </LinearLayout>

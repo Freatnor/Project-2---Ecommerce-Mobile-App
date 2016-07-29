@@ -27,6 +27,7 @@ import com.example.freatnor.project_2___ecommerce_mobile_app.items.Shield;
 import com.example.freatnor.project_2___ecommerce_mobile_app.items.Sword;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ShopActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ShopFragment.OnAddToCartListener,
@@ -64,7 +65,7 @@ public class ShopActivity extends AppCompatActivity
         items.add(new Shield("A tall steel shield, too heavy for most to carry.", "Steel Shield", 45, Item.ItemQuality.STEEL, 0, 0, 0, 20, 10, "icon_steel_shield"));
         mHelper.insertItems(items, null);
 
-        mHelper.insertOrUpdateUser(User.getUser(), null);
+        mHelper.insertOrUpdateUser(User.getUser(new ArrayList<Item>(), new HashMap<String, Item>(), 500, 1, mHelper), null);
         mHelper.insertShoppingCart(ShoppingCart.getInstance(this), null);
 
         mFragmentContainer = (RelativeLayout) findViewById(R.id.shop_fragment_container);

@@ -123,4 +123,8 @@ public class User {
         mEquippedItems.put("accessory2", item);
         mHelper.insertOrUpdateUser(this, null);
     }
+
+    public Item get(int position){
+        return mInventory.get(position);
+    }
 }
