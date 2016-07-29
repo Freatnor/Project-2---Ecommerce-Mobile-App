@@ -1,5 +1,6 @@
 package com.example.freatnor.project_2___ecommerce_mobile_app;
 
+import com.example.freatnor.project_2___ecommerce_mobile_app.database.FantasyShopDatabaseHelper;
 import com.example.freatnor.project_2___ecommerce_mobile_app.items.Item;
 
 import java.util.ArrayList;
@@ -18,10 +19,13 @@ public class User {
     private ArrayList<Item> mInventory;
     private HashMap<String, Item> mEquippedItems;
     private int mGoldAmt;
+    private FantasyShopDatabaseHelper mHelper;
 
     private static User mInstance;
 
-    private User(ArrayList<Item> inventory, HashMap<String, Item> equippedItems, int goldAmt, int userId) {
+    private User(ArrayList<Item> inventory, HashMap<String, Item> equippedItems, int goldAmt, int userId,
+                 FantasyShopDatabaseHelper helper) {
+        mHelper = helper;
         mInventory = inventory;
         mEquippedItems = equippedItems;
         mGoldAmt = goldAmt;
@@ -29,17 +33,17 @@ public class User {
         mUserId = userId;
     }
 
-    public static User getUser(){
+    public static User getUser(FantasyShopDatabaseHelper helper){
         if(mInstance == null){
-            mInstance = new User(new ArrayList<Item>(), new HashMap<String, Item>(), 500, 1);
+            mInstance = new User(new ArrayList<Item>(), new HashMap<String, Item>(), 500, 1, helper);
         }
         return mInstance;
     }
 
     //method for loading from storage. will require a check of the user object returned to see if it worked well
-    public static User getUser(ArrayList<Item> inventory, int goldAmt){
+    public static User getUser(ArrayList<Item> inventory, HashMap<String, Item> equippedItems, int goldAmt, int id, FantasyShopDatabaseHelper helper){
         if(mInstance == null){
-            mInstance = new User(inventory, new HashMap<String, Item>(), goldAmt, 1);
+            mInstance = new User(inventory, equippedItems, goldAmt, id, helper);
         }
         return mInstance;
     }
@@ -58,6 +62,7 @@ public class User {
 
     public void addGold(){
         mGoldAmt += 5000;
+        mHelper.insertOrUpdateUser(this, null);
     }
 
     public void spendGold(int goldAmt){
@@ -71,6 +76,7 @@ public class User {
     
     public void putHeadItem(Item item){
         mEquippedItems.put("head", item);
+        mHelper.insertOrUpdateUser(this, null);
     }
 
     public Item getChestItem(){
@@ -79,6 +85,7 @@ public class User {
 
     public void putChestItem(Item item){
         mEquippedItems.put("chest", item);
+        mHelper.insertOrUpdateUser(this, null);
     }
 
     public Item getRightItem(){
@@ -87,6 +94,7 @@ public class User {
 
     public void putRightItem(Item item){
         mEquippedItems.put("right", item);
+        mHelper.insertOrUpdateUser(this, null);
     }
 
     public Item getLeftItem(){
@@ -95,6 +103,7 @@ public class User {
 
     public void putLeftItem(Item item){
         mEquippedItems.put("left", item);
+        mHelper.insertOrUpdateUser(this, null);
     }
 
     public Item getAccessory1Item(){
@@ -103,6 +112,7 @@ public class User {
 
     public void putAccessory1Item(Item item){
         mEquippedItems.put("accessory1", item);
+        mHelper.insertOrUpdateUser(this, null);
     }
 
     public Item getAccessory2Item(){
@@ -111,5 +121,6 @@ public class User {
 
     public void putAccessory2Item(Item item){
         mEquippedItems.put("accessory2", item);
+        mHelper.insertOrUpdateUser(this, null);
     }
 }

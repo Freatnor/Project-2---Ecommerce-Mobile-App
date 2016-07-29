@@ -27,6 +27,7 @@ import com.example.freatnor.project_2___ecommerce_mobile_app.items.Weapon;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * Created by Jonathan Taylor on 7/27/16.
@@ -500,6 +501,23 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
         else{
             return getInventoryItems(user, selection, args);
         }
+    }
+    
+    //gets a user from the helper if one exists
+    public User getUser(){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(USER_TABLE_NAME, null, "WHERE " + COL_USER_ID + " = ?",
+                new String[]{"1"}, null, null, null);
+        HashMap<String, Item> map = new HashMap<>();
+        map.put("head", getItemsByName(cursor.getString(cursor.getColumnIndex(COL_HEAD)), null).get(0));
+        map.put("chest", getItemsByName(cursor.getString(cursor.getColumnIndex(COL_CHEST)), null).get(0));
+        map.put("right", getItemsByName(cursor.getString(cursor.getColumnIndex(COL_RIGHT_HAND)), null).get(0));
+        map.put("left", getItemsByName(cursor.getString(cursor.getColumnIndex(COL_LEFT_HAND)), null).get(0));
+        map.put("accessory1", getItemsByName(cursor.getString(cursor.getColumnIndex(COL_ACCESSORY1)), null).get(0));
+        map.put("accessory2", getItemsByName(cursor.getString(cursor.getColumnIndex(COL_ACCESSORY2)), null).get(0));
+        int gold = cursor.getInt(cursor.getColumnIndex(COL_CURRENT_GOLD));
+        
+        return User.getUser(getInventoryItems(null, null, null), map, gold, 1, this);
     }
 
 
