@@ -18,7 +18,6 @@ public class User {
     private ArrayList<Item> mInventory;
     private HashMap<String, Item> mEquippedItems;
     private int mGoldAmt;
-    private ShoppingCart mShoppingCart;
 
     private static User mInstance;
 

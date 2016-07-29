@@ -26,11 +26,13 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
 
     private ShopFragment.OnAddToCartListener mAddToCartListener;
     private ShopFragment.OnDetailRequestedListener mDetailListener;
+    private ShopFragment.OnSearchListener mSearchListener;
 
     public ItemRecyclerViewAdapter(ShopFragment.OnAddToCartListener addToCartListener, ShopFragment.OnDetailRequestedListener detailListener,
-                                   ArrayList<Item> items){
+                                   ShopFragment.OnSearchListener searchListener, ArrayList<Item> items){
         mAddToCartListener = addToCartListener;
         mDetailListener = detailListener;
+        mSearchListener = searchListener;
         this.items = items;
     }
 

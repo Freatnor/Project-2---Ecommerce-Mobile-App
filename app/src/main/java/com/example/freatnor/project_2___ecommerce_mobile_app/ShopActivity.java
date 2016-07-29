@@ -1,9 +1,13 @@
 package com.example.freatnor.project_2___ecommerce_mobile_app;
 
+import android.app.SearchManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -84,7 +88,7 @@ public class ShopActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
+        processSearchIntent(getIntent());
     }
 
     @Override
@@ -101,6 +105,12 @@ public class ShopActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.shop, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        ComponentName componentName = new ComponentName(this, this.getClass());
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
+        searchView.setQueryRefinementEnabled(true);
         return true;
     }
 
@@ -142,6 +152,21 @@ public class ShopActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+
+        processSearchIntent(intent);
+    }
+
+    private void processSearchIntent(Intent intent) {
+
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            ArrayList<Item> newItems = mHelper.getItemsByName(query, null);
+            refreshItemList(newItems);
+        }
     }
 
     @Override

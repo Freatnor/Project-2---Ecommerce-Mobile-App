@@ -35,7 +35,7 @@ public class ShoppingCart {
 
     //id set to 1 since only 1 shopping cart in use
     private ShoppingCart(Context context){
-        mItems = new ArrayList<>();
+        mItems = mHelper.getShoppingCartItems(this);
         mShoppingCartId = 1;
         mContext = context;
         mHelper = FantasyShopDatabaseHelper.getInstance(mContext);

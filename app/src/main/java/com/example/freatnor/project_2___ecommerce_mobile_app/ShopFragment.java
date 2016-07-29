@@ -33,9 +33,14 @@ public class ShopFragment extends Fragment {
         void detailRequested(int position);
     }
 
+    public interface OnSearchListener{
+        void onSearch(ArrayList<Item> items);
+    }
+
     private View.OnClickListener mListener;
     private OnAddToCartListener mAddToCartListener;
     private OnDetailRequestedListener mDetailListener;
+    private OnSearchListener mOnSearchListener;
 
     private RecyclerView mRecyclerView;
     private TextView mTotalPrice;
@@ -47,13 +52,15 @@ public class ShopFragment extends Fragment {
 
 
     public static ShopFragment getInstance(View.OnClickListener listener, OnAddToCartListener addToCartListener,
-                                           OnDetailRequestedListener detailListener, Context context, ArrayList<Item> items){
+                                           OnDetailRequestedListener detailListener, Context context, ArrayList<Item> items,
+                                           OnSearchListener searchListener){
         ShopFragment fragment = new ShopFragment();
         fragment.mListener = listener;
         fragment.mAddToCartListener = addToCartListener;
         fragment.mDetailListener = detailListener;
         fragment.mContext = context;
         fragment.mItems = items;
+        fragment.mOnSearchListener = searchListener;
         return fragment;
     }
 
@@ -65,7 +72,7 @@ public class ShopFragment extends Fragment {
         mTotalPrice = (TextView) parentView.findViewById(R.id.shop_total_price_text_view);
         mGoToCartButton = (Button) parentView.findViewById(R.id.go_to_cart_button);
 
-        mAdapter = new ItemRecyclerViewAdapter(mAddToCartListener, mDetailListener, mItems);
+        mAdapter = new ItemRecyclerViewAdapter(mAddToCartListener, mDetailListener, mOnSearchListener, mItems);
         mManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
 
         return parentView;
@@ -81,4 +88,6 @@ public class ShopFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mManager);
     }
+
+
 }
