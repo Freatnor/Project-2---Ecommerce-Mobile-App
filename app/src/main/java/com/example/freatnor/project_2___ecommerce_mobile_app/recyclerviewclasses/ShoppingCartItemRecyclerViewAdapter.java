@@ -66,6 +66,7 @@ implements ShoppingCart.ShoppingCartChangeListener {
             @Override
             public void onClick(View view) {
                 mCart.removeItem(position);
+                mListener.onTotalChange();
             }
         });
 

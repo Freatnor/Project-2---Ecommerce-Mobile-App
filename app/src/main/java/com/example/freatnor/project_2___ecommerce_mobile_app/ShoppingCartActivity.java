@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.freatnor.project_2___ecommerce_mobile_app.database.FantasyShopDatabaseHelper;
+import com.example.freatnor.project_2___ecommerce_mobile_app.items.Item;
 import com.example.freatnor.project_2___ecommerce_mobile_app.recyclerviewclasses.ItemRecyclerViewAdapter;
 import com.example.freatnor.project_2___ecommerce_mobile_app.recyclerviewclasses.ShoppingCartItemRecyclerViewAdapter;
 
@@ -56,8 +57,16 @@ public class ShoppingCartActivity extends AppCompatActivity
         //if there's any intent data passed then add that to the cart
         Intent intent = getIntent();
         if(intent.hasExtra(ShopActivity.ITEM_TO_ADD)){
-            mCart.addItem(FantasyShopDatabaseHelper.getInstance(this).getItemsByName(
-                    intent.getStringExtra(ShopActivity.ITEM_TO_ADD), null).get(0), 1);
+            Item item = FantasyShopDatabaseHelper.getInstance(this).getItemsByName(
+                    intent.getStringExtra(ShopActivity.ITEM_TO_ADD), null).get(0);
+            //check that the item doesn't already exist in the cart and if it does just increment it
+            int position = mCart.getIndex(item);
+            if(position >= 0){
+                mCart.incrementItem(position);
+            }
+            else {
+                mCart.addItem(item, 1);
+            }
         }
 
         mRecyclerView.setAdapter(mAdapter);
@@ -83,6 +92,7 @@ public class ShoppingCartActivity extends AppCompatActivity
                                 else {
                                     User.getUser().spendGold(mCart.getTotalPrice());
                                     mCart.purchaseItems();
+                                    startActivity(new Intent(ShoppingCartActivity.this, UserLoadoutActivity.class));
                                 }
                             }
                         })

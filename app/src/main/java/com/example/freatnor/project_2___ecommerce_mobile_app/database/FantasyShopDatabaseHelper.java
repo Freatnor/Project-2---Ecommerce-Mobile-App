@@ -329,14 +329,14 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
     //methods for removing items from the cart
     public void removeShoppingCartItem(ShoppingCartItem item){
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("DELETE FROM + " + SHOPPING_CART_INVENTORY_TABLE_NAME +
-                " WHERE " + COL_SHOPPING_CART_ITEM_ID + " = " + item.getItem().getName());
+        db.execSQL("DELETE FROM " + SHOPPING_CART_INVENTORY_TABLE_NAME +
+                " WHERE " + COL_SHOPPING_CART_ITEM_ID + " = '" + item.getItem().getName() + "'");
         db.close();
     }
 
     public void removeAllShoppingCartItems(){
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("TRUNCATE TABLE " + SHOPPING_CART_INVENTORY_TABLE_NAME);
+        db.execSQL("DELETE FROM " + SHOPPING_CART_INVENTORY_TABLE_NAME);
         db.close();
     }
 

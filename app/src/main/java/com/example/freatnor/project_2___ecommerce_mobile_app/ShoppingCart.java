@@ -70,6 +70,15 @@ public class ShoppingCart {
         return mItems.get(position);
     }
 
+    public int getIndex(Item item){
+        for (ShoppingCartItem shoppingCartItem : mItems) {
+            if (shoppingCartItem.getItem().getName().equals(item.getName())) {
+                return mItems.indexOf(shoppingCartItem);
+            }
+        }
+        return -1;
+    }
+
     public void removeItem(int position){
         mHelper.removeShoppingCartItem(mItems.get(position));
         mItems.remove(position);
