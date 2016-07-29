@@ -25,6 +25,10 @@ public class ShopFragment extends Fragment {
 
     private ArrayList<Item> mItems;
 
+    public void refreshItemList(ArrayList<Item> newItems) {
+        mAdapter.refreshItemList(newItems);
+    }
+
     public interface OnAddToCartListener{
         void onAddToCart(int position);
     }
@@ -33,14 +37,10 @@ public class ShopFragment extends Fragment {
         void detailRequested(int position);
     }
 
-    public interface OnSearchListener{
-        void onSearch(ArrayList<Item> items);
-    }
 
     private View.OnClickListener mListener;
     private OnAddToCartListener mAddToCartListener;
     private OnDetailRequestedListener mDetailListener;
-    private OnSearchListener mOnSearchListener;
 
     private RecyclerView mRecyclerView;
     private TextView mTotalPrice;
@@ -52,15 +52,13 @@ public class ShopFragment extends Fragment {
 
 
     public static ShopFragment getInstance(View.OnClickListener listener, OnAddToCartListener addToCartListener,
-                                           OnDetailRequestedListener detailListener, Context context, ArrayList<Item> items,
-                                           OnSearchListener searchListener){
+                                           OnDetailRequestedListener detailListener, Context context, ArrayList<Item> items){
         ShopFragment fragment = new ShopFragment();
         fragment.mListener = listener;
         fragment.mAddToCartListener = addToCartListener;
         fragment.mDetailListener = detailListener;
         fragment.mContext = context;
         fragment.mItems = items;
-        fragment.mOnSearchListener = searchListener;
         return fragment;
     }
 
@@ -72,7 +70,7 @@ public class ShopFragment extends Fragment {
         mTotalPrice = (TextView) parentView.findViewById(R.id.shop_total_price_text_view);
         mGoToCartButton = (Button) parentView.findViewById(R.id.go_to_cart_button);
 
-        mAdapter = new ItemRecyclerViewAdapter(mAddToCartListener, mDetailListener, mOnSearchListener, mItems);
+        mAdapter = new ItemRecyclerViewAdapter(mAddToCartListener, mDetailListener, mItems);
         mManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
 
         return parentView;

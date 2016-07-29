@@ -38,6 +38,8 @@ public class ShopActivity extends AppCompatActivity
     private RelativeLayout mFragmentContainer;
     private ArrayList<Item> mItems;
 
+    private ShopFragment mFragment;
+
 
 
     @Override
@@ -73,10 +75,10 @@ public class ShopActivity extends AppCompatActivity
             }
         };
         //set up the inner fragment
+        mFragment = ShopFragment.getInstance(listener, this, this, this, mItems);
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.shop_fragment_container,
-                        ShopFragment.getInstance(listener, this, this, this, mItems))
+                .add(R.id.shop_fragment_container, mFragment)
                 .commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -165,7 +167,7 @@ public class ShopActivity extends AppCompatActivity
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             ArrayList<Item> newItems = mHelper.getItemsByName(query, null);
-            refreshItemList(newItems);
+            mFragment.refreshItemList(newItems);
         }
     }
 
