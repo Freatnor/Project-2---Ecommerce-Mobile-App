@@ -8,13 +8,13 @@ public class Staff extends Weapon {
     private String mSpecialAbility;
 
     public Staff(String description, String name, int price, ItemQuality itemQuality, int physicalAttack,
-                 int magicalAttack, int range, String specialAbility, int imageId) {
+                 int magicalAttack, int range, String specialAbility, String imageId) {
         super(description, name, price, itemQuality, physicalAttack, magicalAttack, range, imageId);
         mSpecialAbility = specialAbility;
     }
 
     public Staff(String description, String name, int price, ItemQuality itemQuality, boolean owned,
-                 int physicalAttack, int magicalAttack, int range, String specialAbility, int imageId) {
+                 int physicalAttack, int magicalAttack, int range, String specialAbility, String imageId) {
         super(description, name, price, itemQuality, owned, physicalAttack, magicalAttack, range, imageId);
         mSpecialAbility = specialAbility;
     }

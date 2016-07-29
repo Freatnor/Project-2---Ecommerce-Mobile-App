@@ -12,7 +12,7 @@ public abstract class Weapon extends Item{
     //could add a "requiresTwoHands" or "onlyEquippableInDominant" booleans for loadout screen
 
     public Weapon(String description, String name, int price, ItemQuality itemQuality, int physicalAttack,
-                  int magicalAttack, int range, int imageId) {
+                  int magicalAttack, int range, String imageId) {
         super(description, name, price, itemQuality, imageId);
         mPhysicalAttack = physicalAttack;
         mMagicalAttack = magicalAttack;
@@ -21,7 +21,7 @@ public abstract class Weapon extends Item{
     }
 
     public Weapon(String description, String name, int price, ItemQuality itemQuality, boolean owned, int physicalAttack,
-                  int magicalAttack, int range, int imageId) {
+                  int magicalAttack, int range, String imageId) {
         super(description, name, price, itemQuality, imageId);
         mPhysicalAttack = physicalAttack;
         mMagicalAttack = magicalAttack;

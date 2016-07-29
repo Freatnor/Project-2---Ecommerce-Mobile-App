@@ -32,6 +32,7 @@
         android:padding="5dp">
 
         <TextView
+            android:id="@+id/shop_recycler_item_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Name Placeholder"
@@ -198,7 +199,7 @@
                     android:textStyle="bold"/>
 
                 <TextView
-                    android:id="@+id/price_text_view"
+                    android:id="@+id/shop_recycler_price_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"

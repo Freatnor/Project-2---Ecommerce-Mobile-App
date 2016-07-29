@@ -9,14 +9,14 @@ public class Shield extends Weapon {
     private int mMagicDefense;
 
     public Shield(String description, String name, int price, ItemQuality itemQuality, int physicalAttack,
-                  int magicalAttack, int range, int defense, int magicDefense, int imageId) {
+                  int magicalAttack, int range, int defense, int magicDefense, String imageId) {
         super(description, name, price, itemQuality, physicalAttack, magicalAttack, range, imageId);
         mDefense = defense;
         mMagicDefense = magicDefense;
     }
 
     public Shield(String description, String name, int price, ItemQuality itemQuality, boolean owned,
-                  int physicalAttack, int magicalAttack, int range, int defense, int magicDefense, int imageId) {
+                  int physicalAttack, int magicalAttack, int range, int defense, int magicDefense, String imageId) {
         super(description, name, price, itemQuality, owned, physicalAttack, magicalAttack, range, imageId);
         mDefense = defense;
         mMagicDefense = magicDefense;

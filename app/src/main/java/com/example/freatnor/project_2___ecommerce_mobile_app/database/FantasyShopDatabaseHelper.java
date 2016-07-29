@@ -61,7 +61,6 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_ITEM_AMOUNT = "item_amount";
 
     public static final String ITEMS_TABLE_NAME = "items";
-    public static final String COL_ITEM_ID = "item_id";
     public static final String COL_DESCRIPTION = "description";
     public static final String COL_ITEM_NAME = "name";
     public static final String COL_ITEM_PRICE = "price";
@@ -74,6 +73,7 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_MAGIC_DEFENSE = "magical_defense";
     public static final String COL_SPECIAL_ABILITY = "special_ability";
     public static final String COL_RANGE = "range";
+    public static final String COL_IMAGE_NAME = "image_name";
 
 
 
@@ -93,8 +93,7 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_ENTRIES_ITEMS = "CREATE TABLE " +
             ITEMS_TABLE_NAME + " (" +
-            COL_ITEM_ID + " INTEGER PRIMARY KEY," +
-            COL_ITEM_NAME + " TEXT," +
+            COL_ITEM_NAME + " TEXT PRIMARY KEY," +
             COL_DESCRIPTION + " TEXT," +
             COL_ITEM_PRICE + " INTEGER," +
             COL_ITEM_QUALITY + " INTEGER," +
@@ -105,25 +104,26 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
             COL_PHYSICAL_DEFENSE + " INTEGER," +
             COL_MAGIC_DEFENSE + " INTEGER," +
             COL_RANGE + " INTEGER," +
-            COL_SPECIAL_ABILITY + " TEXT" + ")";
+            COL_SPECIAL_ABILITY + " TEXT, " +
+            COL_IMAGE_NAME + " TEXT " + ")";
 
     private static final String SQL_CREATE_ENTRIES_USER = "CREATE TABLE " +
             USER_TABLE_NAME + " (" +
             COL_USER_ID + " INTEGER PRIMARY KEY," +
             COL_USER_NAME + " TEXT," +
-            COL_CURRENT_GOLD + " INTEGER" +
-            COL_HEAD + " INTEGER," +
-            COL_CHEST + " INTEGER," +
-            COL_RIGHT_HAND + " INTEGER," +
-            COL_LEFT_HAND + " INTEGER," +
-            COL_ACCESSORY1 + " INTEGER," +
-            COL_ACCESSORY2 + " INTEGER" +
-            "FOREIGN KEY("+ COL_HEAD +") REFERENCES "+ ITEMS_TABLE_NAME+"("+ COL_USER_ID +") )," +
-            "FOREIGN KEY("+ COL_CHEST +") REFERENCES "+ ITEMS_TABLE_NAME+"("+ COL_USER_ID +") )," +
-            "FOREIGN KEY("+ COL_RIGHT_HAND +") REFERENCES "+ ITEMS_TABLE_NAME+"("+ COL_USER_ID +") )," +
-            "FOREIGN KEY("+ COL_LEFT_HAND +") REFERENCES "+ ITEMS_TABLE_NAME+"("+ COL_USER_ID +") )," +
-            "FOREIGN KEY("+ COL_ACCESSORY1 +") REFERENCES "+ ITEMS_TABLE_NAME+"("+ COL_USER_ID +") )," +
-            "FOREIGN KEY("+ COL_ACCESSORY2 +") REFERENCES "+ ITEMS_TABLE_NAME+"("+ COL_USER_ID +") )";
+            COL_CURRENT_GOLD + " INTEGER," +
+            COL_HEAD + " TEXT," +
+            COL_CHEST + " TEXT," +
+            COL_RIGHT_HAND + " TEXT," +
+            COL_LEFT_HAND + " TEXT," +
+            COL_ACCESSORY1 + " TEXT," +
+            COL_ACCESSORY2 + " TEXT," +
+            "FOREIGN KEY("+ COL_HEAD +") REFERENCES "+ ITEMS_TABLE_NAME+"("+ COL_ITEM_NAME +")," +
+            "FOREIGN KEY("+ COL_CHEST +") REFERENCES "+ ITEMS_TABLE_NAME+"("+ COL_ITEM_NAME +")," +
+            "FOREIGN KEY("+ COL_RIGHT_HAND +") REFERENCES "+ ITEMS_TABLE_NAME+"("+ COL_ITEM_NAME +")," +
+            "FOREIGN KEY("+ COL_LEFT_HAND +") REFERENCES "+ ITEMS_TABLE_NAME+"("+ COL_ITEM_NAME +")," +
+            "FOREIGN KEY("+ COL_ACCESSORY1 +") REFERENCES "+ ITEMS_TABLE_NAME+"("+ COL_ITEM_NAME +")," +
+            "FOREIGN KEY("+ COL_ACCESSORY2 +") REFERENCES "+ ITEMS_TABLE_NAME+"("+ COL_ITEM_NAME +") )";
 
     private static final String SQL_CREATE_ENTRIES_SHOPPING_CART = "CREATE TABLE " +
             SHOPPING_CART_TABLE_NAME + " (" +
@@ -133,18 +133,20 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_ENTRIES_SHOPPING_CART_INVENTORY = "CREATE TABLE " +
             SHOPPING_CART_INVENTORY_TABLE_NAME + " (" +
-            COL_SHOPPING_CART_ITEM_ID + " INTEGER PRIMARY KEY," +
-            COL_FOREIGN_SHOPPING_CART_ID + " INTEGER PRIMARY KEY," +
+            COL_SHOPPING_CART_ITEM_ID + " TEXT," +
+            COL_FOREIGN_SHOPPING_CART_ID + " INTEGER," +
             COL_ITEM_AMOUNT + " INTEGER," +
-            "FOREIGN KEY("+ COL_SHOPPING_CART_ITEM_ID +") REFERENCES "+ ITEMS_TABLE_NAME+"("+ COL_USER_ID +") )," +
-            "FOREIGN KEY("+ COL_FOREIGN_SHOPPING_CART_ID +") REFERENCES "+ SHOPPING_CART_TABLE_NAME+"("+ COL_ITEM_ID +") )";
+            "PRIMARY KEY (" + COL_SHOPPING_CART_ITEM_ID + "," + COL_FOREIGN_SHOPPING_CART_ID + "), " +
+            "FOREIGN KEY("+ COL_SHOPPING_CART_ITEM_ID +") REFERENCES "+ ITEMS_TABLE_NAME+"("+ COL_USER_ID +")," +
+            "FOREIGN KEY("+ COL_FOREIGN_SHOPPING_CART_ID +") REFERENCES "+ SHOPPING_CART_TABLE_NAME+"("+ COL_ITEM_NAME +") )";
 
     private static final String SQL_CREATE_ENTRIES_USER_INVENTORY = "CREATE TABLE " +
             USER_INVENTORY_TABLE_NAME + " (" +
-            COL_INVENTORY_ITEM_ID + " INTEGER PRIMARY KEY," +
-            COL_FOREIGN_USER_ID + " INTEGER PRIMARY KEY," +
-            "FOREIGN KEY("+ COL_SHOPPING_CART_ITEM_ID +") REFERENCES "+ ITEMS_TABLE_NAME+"("+ COL_USER_ID +") )," +
-            "FOREIGN KEY("+ COL_FOREIGN_SHOPPING_CART_ID +") REFERENCES "+ SHOPPING_CART_TABLE_NAME+"("+ COL_ITEM_ID +") )";
+            COL_INVENTORY_ITEM_ID + " TEXT," +
+            COL_FOREIGN_USER_ID + " INTEGER," +
+            "PRIMARY KEY (" + COL_INVENTORY_ITEM_ID + "," + COL_FOREIGN_USER_ID + "), " +
+            "FOREIGN KEY("+ COL_INVENTORY_ITEM_ID +") REFERENCES "+ ITEMS_TABLE_NAME+"("+ COL_USER_ID +")," +
+            "FOREIGN KEY("+ COL_FOREIGN_USER_ID +") REFERENCES "+ SHOPPING_CART_TABLE_NAME+"("+ COL_ITEM_NAME +") )";
 
     private static final String SQL_DELETE_ENTRIES_ITEMS = "DROP TABLE IF EXISTS " +
             ITEMS_TABLE_NAME;
@@ -165,15 +167,6 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_ENTRIES_SHOPPING_CART_INVENTORY);
         db.execSQL(SQL_CREATE_ENTRIES_USER_INVENTORY);
 
-        ArrayList<Item> items = new ArrayList<>();
-        items.add(new Sword("A sword", "Bronze Sword", 12, Item.ItemQuality.BRONZE, 10, 0, 0, R.drawable.icon_long_sword));
-        items.add(new Sword("A magical sword imbued with ice", "IceBrand", 400, Item.ItemQuality.MAGICAL, 30, 10, 0, R.drawable.icon_magic_sword));
-        items.add(new Breastplate("A breastplate fashioned from bronze.", "Bronze Armor", 30, Item.ItemQuality.BRONZE, 10, 5, R.drawable.icon_bronze_armor));
-        items.add(new Robe("The robe of a renowned cleric, imbued with magical power.", "Cleric's Robes", 200, Item.ItemQuality.STEEL, 8, 25, 15, R.drawable.icon_cleric_robes));
-        insertItems(items);
-
-        insertOrUpdateUser(User.getUser());
-        insertShoppingCart(ShoppingCart.getInstance());
     }
 
     @Override
@@ -193,7 +186,6 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
             needsClose = true;
         }
         ContentValues values = new ContentValues();
-        values.put(COL_ITEM_ID, item.getImageId());
         values.put(COL_ITEM_NAME, item.getName());
         values.put(COL_DESCRIPTION, item.getDescription());
         values.put(COL_ITEM_PRICE, item.getPrice());
@@ -205,6 +197,7 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
         values.put(COL_MAGIC_DEFENSE, item.getMagicalDefense());
         values.put(COL_PHYSICAL_DEFENSE, item.getPhysicalDefense());
         values.put(COL_SPECIAL_ABILITY, item.getSpecialAbility());
+        values.put(COL_IMAGE_NAME, item.getImageId());
         if(item instanceof Weapon){
             values.put(COL_RANGE, ((Weapon) item).getRange());
         }
@@ -215,14 +208,21 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
         if(needsClose){
             db.close();
         }
+
     }
 
-    public void insertItems(ArrayList<Item> items){
-        SQLiteDatabase db = getWritableDatabase();
+    public void insertItems(ArrayList<Item> items, SQLiteDatabase db){
+        boolean needsClose = false;
+        if(db == null){
+            db = getWritableDatabase();
+            needsClose = true;
+        }
         for (int i = 0; i < items.size(); i++) {
             insertItem(items.get(i), db);
         }
-        close();
+        if(needsClose){
+            db.close();
+        }
     }
 
     //methods for inserting shopping cart items to the shopping cart inventory table
@@ -235,7 +235,7 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
             needsClose = true;
         }
         ContentValues values = new ContentValues();
-        values.put(COL_SHOPPING_CART_ITEM_ID, item.getItem().getImageId());
+        values.put(COL_SHOPPING_CART_ITEM_ID, item.getItem().getName());
         values.put(COL_FOREIGN_SHOPPING_CART_ID, 1);
         values.put(COL_ITEM_AMOUNT, item.getNumItems());
         try{db.insertWithOnConflict(SHOPPING_CART_INVENTORY_TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);}
@@ -252,7 +252,7 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
         for (int i = 0; i < items.size(); i++) {
             insertOrUpdateShoppingCartItem(items.get(i), db);
         }
-        close();
+        db.close();
     }
 
     public void insertInventoryItem(Item item, SQLiteDatabase db){
@@ -262,7 +262,7 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
             needsClose = true;
         }
         ContentValues values = new ContentValues();
-        values.put(COL_INVENTORY_ITEM_ID, item.getImageId());
+        values.put(COL_INVENTORY_ITEM_ID, item.getName());
         values.put(COL_FOREIGN_USER_ID, 1);
         try{db.insertOrThrow(USER_INVENTORY_TABLE_NAME, null, values);}
         catch(Exception e){
@@ -278,31 +278,41 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
         for (int i = 0; i < items.size(); i++) {
             insertInventoryItem(items.get(i), db);
         }
-        close();
+        db.close();
     }
 
     //insert or update user data, any item slot will insert null if not present
-    public void insertOrUpdateUser(User user){
-        SQLiteDatabase db = getWritableDatabase();
+    public void insertOrUpdateUser(User user, SQLiteDatabase db){
+        boolean needsClose = false;
+        if(db == null){
+            db = getWritableDatabase();
+            needsClose = true;
+        }
         ContentValues values = new ContentValues();
         values.put(COL_USER_ID, user.getUserId());
         values.put(COL_USER_NAME, user.getUserName());
         values.put(COL_CURRENT_GOLD, user.getGoldAmt());
-        values.put(COL_HEAD, user.getHeadItem().getImageId());
-        values.put(COL_CHEST, user.getChestItem().getImageId());
-        values.put(COL_RIGHT_HAND, user.getRightItem().getImageId());
-        values.put(COL_LEFT_HAND, user.getLeftItem().getImageId());
-        values.put(COL_ACCESSORY1, user.getAccessory1Item().getImageId());
-        values.put(COL_ACCESSORY2, user.getAccessory2Item().getImageId());
+        if(user.getHeadItem() != null) {values.put(COL_HEAD, (user.getHeadItem().getName()));}
+        if(user.getChestItem() != null){values.put(COL_CHEST, user.getChestItem().getName());}
+        if(user.getRightItem() != null){values.put(COL_RIGHT_HAND, user.getRightItem().getName());}
+        if(user.getLeftItem() != null){values.put(COL_LEFT_HAND, user.getLeftItem().getName());}
+        if(user.getAccessory1Item() != null){values.put(COL_ACCESSORY1, user.getAccessory1Item().getName());}
+        if(user.getAccessory2Item() != null){values.put(COL_ACCESSORY2, user.getAccessory2Item().getName());}
         try{db.insertWithOnConflict(USER_TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);}
         catch(Exception e){
             Log.e("Insert", "insertRow: unable to insert because of unique issue", e);
         }
-        db.close();
+        if(needsClose){
+            db.close();
+        }
     }
 
-    public void insertShoppingCart(ShoppingCart shoppingCart){
-        SQLiteDatabase db = getWritableDatabase();
+    public void insertShoppingCart(ShoppingCart shoppingCart, SQLiteDatabase db){
+        boolean needsClose = false;
+        if(db == null){
+            db = getWritableDatabase();
+            needsClose = true;
+        }
         ContentValues values = new ContentValues();
         values.put(COL_SHOPPING_CART_ID, shoppingCart.getShoppingCartId());
         //set to 1 because only 1 user and cart at the moment
@@ -311,14 +321,16 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
         catch(Exception e){
             Log.e("Insert", "insertRow: unable to insert because of unique issue", e);
         }
-        db.close();
+        if(needsClose){
+            db.close();
+        }
     }
 
     //methods for removing items from the cart
     public void removeShoppingCartItem(ShoppingCartItem item){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM + " + SHOPPING_CART_INVENTORY_TABLE_NAME +
-                " WHERE " + COL_SHOPPING_CART_ITEM_ID + " = " + item.getItem().getImageId());
+                " WHERE " + COL_SHOPPING_CART_ITEM_ID + " = " + item.getItem().getName());
         db.close();
     }
 
@@ -327,6 +339,7 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("TRUNCATE TABLE " + SHOPPING_CART_INVENTORY_TABLE_NAME);
         db.close();
     }
+
 
     //gets all items in the Items table and processes them into the correct items
     public ArrayList<Item> getShopItems(String extraSelection, String[] newArg){
@@ -373,7 +386,7 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
             selectionArgs = result;
         }
         qb2.setTables(ITEMS_TABLE_NAME + " INNER JOIN " + USER_INVENTORY_TABLE_NAME + " ON " +
-                ITEMS_TABLE_NAME + "." + COL_ITEM_ID + " = " + USER_INVENTORY_TABLE_NAME + "." +
+                ITEMS_TABLE_NAME + "." + COL_ITEM_NAME + " = " + USER_INVENTORY_TABLE_NAME + "." +
                 COL_INVENTORY_ITEM_ID);
 
         Cursor cursor = qb2.query(db, null, selection, selectionArgs, null, null, null);
@@ -406,7 +419,7 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
         String selection = SHOPPING_CART_INVENTORY_TABLE_NAME+"."+COL_FOREIGN_SHOPPING_CART_ID+" = ?";
         String[] selectionArgs = {shoppingCart.getShoppingCartId() + ""};
         qb2.setTables(ITEMS_TABLE_NAME + " INNER JOIN " + SHOPPING_CART_INVENTORY_TABLE_NAME + " ON " +
-                ITEMS_TABLE_NAME + "." + COL_ITEM_ID + " = " + SHOPPING_CART_INVENTORY_TABLE_NAME + "." +
+                ITEMS_TABLE_NAME + "." + COL_ITEM_NAME + " = " + SHOPPING_CART_INVENTORY_TABLE_NAME + "." +
                 COL_SHOPPING_CART_ITEM_ID);
 
         Cursor cursor = qb2.query(db, null, null, null, null, null, null);
@@ -491,7 +504,7 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
     //method to take the cursor and return an Item object of the correct subclass
     private Item processItem(Cursor cursor) throws Exception{
         Item item;
-        int imageId = cursor.getInt(cursor.getColumnIndex(COL_ITEM_ID));
+        String imageId = cursor.getString(cursor.getColumnIndex(COL_IMAGE_NAME));
         String name = cursor.getString(cursor.getColumnIndex(COL_ITEM_NAME));
         String descrtiption = cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION));
         String type = cursor.getString(cursor.getColumnIndex(COL_ITEM_TYPE));

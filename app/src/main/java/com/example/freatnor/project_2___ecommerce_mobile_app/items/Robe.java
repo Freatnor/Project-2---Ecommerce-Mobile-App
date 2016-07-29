@@ -8,7 +8,7 @@ public class Robe extends Armor {
     private int mMagicAttack;
 
     //Robes are only for bodies, not heads!
-    public Robe(String description, String name, int price, ItemQuality itemQuality, int defense, int magicDefense, int magicAttack, int imageId) {
+    public Robe(String description, String name, int price, ItemQuality itemQuality, int defense, int magicDefense, int magicAttack, String imageId) {
         super(description, name, price, itemQuality, defense, magicDefense, "chest", imageId);
         mMagicAttack = magicAttack;
     }

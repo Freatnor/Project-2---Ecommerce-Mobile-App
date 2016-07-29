@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.freatnor.project_2___ecommerce_mobile_app.database.FantasyShopDatabaseHelper;
 import com.example.freatnor.project_2___ecommerce_mobile_app.items.Item;
 
 /**
@@ -61,6 +62,11 @@ public class ItemDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        if(savedInstanceState != null){
+            mItem = FantasyShopDatabaseHelper.getInstance(this.getContext()).getItemsByName(
+                    savedInstanceState.getString("ItemName"), null).get(0);
+        }
+
         View parentView = inflater.inflate(R.layout.fragment_item_detail, container, false);
         mItemIcon = (ImageView) parentView.findViewById(R.id.item_image_container);
         mItemName = (TextView) parentView.findViewById(R.id.item_detail_name);
@@ -88,21 +94,21 @@ public class ItemDetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //sets the image to the resource id saved in the image object
-        mItemIcon.setImageResource(mItem.getImageId());
+        mItemIcon.setImageResource(getResources().getIdentifier(mItem.getImageId(), "drawable", getContext().getPackageName()));
 
         mItemName.setText(mItem.getName());
         mItemSlot.setText(mItem.getSlot());
         mItemQuality.setText(mItem.getItemQuality().toString());
 
         mItemPAtkValue.setText(mItem.getPhysicalAttack()+"");
-        mItemMAtkValue.setText(mItem.getMagicalAttack());
-        mItemPDefValue.setText(mItem.getPhysicalDefense());
-        mItemMDefValue.setText(mItem.getMagicalDefense());
+        mItemMAtkValue.setText(mItem.getMagicalAttack() + "");
+        mItemPDefValue.setText(mItem.getPhysicalDefense() + "");
+        mItemMDefValue.setText(mItem.getMagicalDefense() + "");
 
         mItemSpecial.setText(SPECIAL_PREFIX + mItem.getSpecialAbility());
         mItemDescription.setText(DESCRIPTION_PREFIX + mItem.getDescription());
 
-        mItemPrice.setText(mItem.getPrice());
+        mItemPrice.setText(mItem.getPrice() + "");
 
         if(!fromShop){
             mPriceContainer.setVisibility(View.INVISIBLE);
@@ -110,5 +116,11 @@ public class ItemDetailFragment extends Fragment {
 
         mButton.setOnClickListener(mListener);
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString("ItemName", mItem.getName());
+        super.onSaveInstanceState(outState);
     }
 }

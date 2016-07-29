@@ -6,11 +6,11 @@ package com.example.freatnor.project_2___ecommerce_mobile_app.items;
 public class Breastplate extends Armor {
 
     //breastplates are body armor, so go in the "chest" slot
-    public Breastplate(String description, String name, int price, ItemQuality itemQuality, int defense, int magicDefense, int imageId) {
+    public Breastplate(String description, String name, int price, ItemQuality itemQuality, int defense, int magicDefense, String imageId) {
         super(description, name, price, itemQuality, defense, magicDefense, "chest", imageId);
     }
 
-    public Breastplate(String description, String name, int price, ItemQuality itemQuality, boolean owned, int defense, int magicDefense, int imageId) {
+    public Breastplate(String description, String name, int price, ItemQuality itemQuality, boolean owned, int defense, int magicDefense, String imageId) {
         super(description, name, price, itemQuality, owned, defense, magicDefense, "chest", imageId);
     }
 

@@ -14,7 +14,7 @@ public class Accessory extends Item {
 
 
     public Accessory(String description, String name, int price, ItemQuality itemQuality, int magicAttack,
-                     int physicalAttack, int defense, int magicDefense, String specialAbility, int imageId) {
+                     int physicalAttack, int defense, int magicDefense, String specialAbility, String imageId) {
         super(description, name, price, itemQuality, imageId);
         mMagicAttack = magicAttack;
         mPhysicalAttack = physicalAttack;
@@ -24,7 +24,7 @@ public class Accessory extends Item {
     }
 
     public Accessory(String description, String name, int price, ItemQuality itemQuality, boolean owned,
-                     int magicAttack, int physicalAttack, int defense, int magicDefense, String specialAbility, int imageId) {
+                     int magicAttack, int physicalAttack, int defense, int magicDefense, String specialAbility, String imageId) {
         super(description, name, price, itemQuality, imageId);
         mMagicAttack = magicAttack;
         mPhysicalAttack = physicalAttack;

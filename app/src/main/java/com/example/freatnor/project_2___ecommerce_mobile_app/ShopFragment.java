@@ -63,7 +63,7 @@ public class ShopFragment extends Fragment {
         View parentView = inflater.inflate(R.layout.fragment_shop, container, false);
         mRecyclerView = (RecyclerView) parentView.findViewById(R.id.shop_fragment_recycler_view);
         mTotalPrice = (TextView) parentView.findViewById(R.id.shop_total_price_text_view);
-        mGoToCartButton = (Button) parentView.findViewById(R.id.add_to_cart_or_equip_button);
+        mGoToCartButton = (Button) parentView.findViewById(R.id.go_to_cart_button);
 
         mAdapter = new ItemRecyclerViewAdapter(mAddToCartListener, mDetailListener, mItems);
         mManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
@@ -75,7 +75,7 @@ public class ShopFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mTotalPrice.setText(ShoppingCart.getInstance().getTotalPrice());
+        mTotalPrice.setText(ShoppingCart.getInstance().getTotalPrice() + "");
         mGoToCartButton.setOnClickListener(mListener);
 
         mRecyclerView.setAdapter(mAdapter);

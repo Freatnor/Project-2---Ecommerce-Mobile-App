@@ -35,9 +35,9 @@ public abstract class Item {
     private String mName;
     private int mPrice;
     private ItemQuality mItemQuality;
-    private int mImageId;
+    private String mImageId;
 
-    public Item(String description, String name, int price, ItemQuality itemQuality, int imageId) {
+    public Item(String description, String name, int price, ItemQuality itemQuality, String imageId) {
         mDescription = description;
         mName = name;
         mPrice = price;
@@ -61,7 +61,8 @@ public abstract class Item {
         return mItemQuality;
     }
 
-    public int getImageId() {
+
+    public String getImageId() {
         return mImageId;
     }
 

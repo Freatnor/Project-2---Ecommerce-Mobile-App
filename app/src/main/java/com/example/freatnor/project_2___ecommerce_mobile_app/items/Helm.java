@@ -6,11 +6,11 @@ package com.example.freatnor.project_2___ecommerce_mobile_app.items;
 public class Helm extends Armor {
 
 
-    public Helm(String description, String name, int price, ItemQuality itemQuality, int defense, int magicDefense, int imageId) {
+    public Helm(String description, String name, int price, ItemQuality itemQuality, int defense, int magicDefense, String imageId) {
         super(description, name, price, itemQuality, defense, magicDefense, "head", imageId);
     }
 
-    public Helm(String description, String name, int price, ItemQuality itemQuality, boolean owned, int defense, int magicDefense, int imageId) {
+    public Helm(String description, String name, int price, ItemQuality itemQuality, boolean owned, int defense, int magicDefense, String imageId) {
         super(description, name, price, itemQuality, owned, defense, magicDefense, "head", imageId);
     }
 

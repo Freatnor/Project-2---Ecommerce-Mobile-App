@@ -11,7 +11,7 @@ public abstract class Armor extends Item {
     protected String mSlot;
 
     public Armor(String description, String name, int price, ItemQuality itemQuality, int defense,
-                 int magicDefense, String slot, int imageId) {
+                 int magicDefense, String slot, String imageId) {
         super(description, name, price, itemQuality, imageId);
         mDefense = defense;
         mMagicDefense = magicDefense;
@@ -19,7 +19,7 @@ public abstract class Armor extends Item {
     }
 
     public Armor(String description, String name, int price, ItemQuality itemQuality, boolean owned,
-                 int defense, int magicDefense, String slot, int imageId) {
+                 int defense, int magicDefense, String slot, String imageId) {
         super(description, name, price, itemQuality, imageId);
         mDefense = defense;
         mMagicDefense = magicDefense;

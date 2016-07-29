@@ -6,11 +6,11 @@ package com.example.freatnor.project_2___ecommerce_mobile_app.items;
 public class Sword extends Weapon {
 
 
-    public Sword(String description, String name, int price, ItemQuality itemQuality, int physicalAttack, int magicalAttack, int range, int imageId) {
+    public Sword(String description, String name, int price, ItemQuality itemQuality, int physicalAttack, int magicalAttack, int range, String imageId) {
         super(description, name, price, itemQuality, physicalAttack, magicalAttack, range, imageId);
     }
 
-    public Sword(String description, String name, int price, ItemQuality itemQuality, boolean owned, int physicalAttack, int magicalAttack, int range, int imageId) {
+    public Sword(String description, String name, int price, ItemQuality itemQuality, boolean owned, int physicalAttack, int magicalAttack, int range, String imageId) {
         super(description, name, price, itemQuality, owned, physicalAttack, magicalAttack, range, imageId);
     }
 

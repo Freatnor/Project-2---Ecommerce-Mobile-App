@@ -16,7 +16,11 @@ import android.view.MenuItem;
 import android.widget.RelativeLayout;
 
 import com.example.freatnor.project_2___ecommerce_mobile_app.database.FantasyShopDatabaseHelper;
+import com.example.freatnor.project_2___ecommerce_mobile_app.items.Breastplate;
 import com.example.freatnor.project_2___ecommerce_mobile_app.items.Item;
+import com.example.freatnor.project_2___ecommerce_mobile_app.items.Robe;
+import com.example.freatnor.project_2___ecommerce_mobile_app.items.Shield;
+import com.example.freatnor.project_2___ecommerce_mobile_app.items.Sword;
 
 import java.util.ArrayList;
 
@@ -42,6 +46,18 @@ public class ShopActivity extends AppCompatActivity
         //grab all the shop items for display
         mHelper = FantasyShopDatabaseHelper.getInstance(this);
         mItems = mHelper.getShopItems(null, null);
+
+        //Initialize the db
+        ArrayList<Item> items = new ArrayList<>();
+        items.add(new Sword("A sword", "Bronze Sword", 12, Item.ItemQuality.BRONZE, 10, 0, 0, "icon_long_sword"));
+        items.add(new Sword("A magical sword imbued with ice", "IceBrand", 400, Item.ItemQuality.MAGICAL, 30, 10, 0, "icon_magic_sword"));
+        items.add(new Breastplate("A breastplate fashioned from bronze.", "Bronze Armor", 30, Item.ItemQuality.BRONZE, 10, 5, "icon_bronze_armor"));
+        items.add(new Robe("The robe of a renowned cleric, imbued with magical power.", "Cleric's Robes", 200, Item.ItemQuality.STEEL, 8, 25, 15, "icon_cleric_robes"));
+        items.add(new Shield("A tall steel shield, too heavy for most to carry.", "Steel Shield", 45, Item.ItemQuality.STEEL, 0, 0, 0, 20, 10, "icon_steel_shield"));
+        mHelper.insertItems(items, null);
+
+        mHelper.insertOrUpdateUser(User.getUser(), null);
+        mHelper.insertShoppingCart(ShoppingCart.getInstance(), null);
 
         mFragmentContainer = (RelativeLayout) findViewById(R.id.shop_fragment_container);
 
@@ -130,7 +146,7 @@ public class ShopActivity extends AppCompatActivity
 
     @Override
     public void onAddToCart(int position) {
-        Intent intent = new Intent(ShopActivity.this, ShoppingCart.class);
+        Intent intent = new Intent(ShopActivity.this, ShoppingCartActivity.class);
         intent.putExtra(ITEM_TO_ADD, position);
         startActivity(intent);
     }
@@ -141,11 +157,11 @@ public class ShopActivity extends AppCompatActivity
         getSupportFragmentManager()
                 .beginTransaction()
                 .addToBackStack("ShopFragment")
-                .add(R.id.shop_fragment_container,
+                .replace(R.id.shop_fragment_container,
                         ItemDetailFragment.getInstance(mItems.get(position), true, new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent intent = new Intent(ShopActivity.this, ShoppingCart.class);
+                                Intent intent = new Intent(ShopActivity.this, ShoppingCartActivity.class);
                                 intent.putExtra(ITEM_TO_ADD, position);
                                 startActivity(intent);
                             }

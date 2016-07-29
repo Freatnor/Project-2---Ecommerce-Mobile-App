@@ -5,12 +5,12 @@ package com.example.freatnor.project_2___ecommerce_mobile_app.items;
  */
 public class Bow extends Weapon {
 
-    public Bow(String description, String name, int price, ItemQuality itemQuality, int physicalAttack, int magicalAttack, int range, int imageId) {
+    public Bow(String description, String name, int price, ItemQuality itemQuality, int physicalAttack, int magicalAttack, int range, String imageId) {
         super(description, name, price, itemQuality, physicalAttack, magicalAttack, range, imageId);
     }
 
     public Bow(String description, String name, int price, ItemQuality itemQuality, boolean owned,
-               int physicalAttack, int magicalAttack, int range, int imageId) {
+               int physicalAttack, int magicalAttack, int range, String imageId) {
         super(description, name, price, itemQuality, owned, physicalAttack, magicalAttack, range, imageId);
     }
 
