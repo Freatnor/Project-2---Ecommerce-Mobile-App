@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +25,6 @@ import java.util.ArrayList;
 public class ShopFragment extends Fragment {
 
     private ArrayList<Item> mItems;
-
-    public void refreshItemList(ArrayList<Item> newItems) {
-        mAdapter.refreshItemList(newItems);
-    }
 
     public interface OnAddToCartListener{
         void onAddToCart(int position);
@@ -71,6 +68,7 @@ public class ShopFragment extends Fragment {
         mGoToCartButton = (Button) parentView.findViewById(R.id.go_to_cart_button);
 
         mAdapter = new ItemRecyclerViewAdapter(mAddToCartListener, mDetailListener, mItems);
+        Log.d("ShopFragment", "onCreateView: Adapter created!");
         mManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
 
         return parentView;
@@ -85,6 +83,11 @@ public class ShopFragment extends Fragment {
 
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mManager);
+    }
+
+    public void refreshItemList(ArrayList<Item> newItems) {
+        mAdapter.refreshItemList(newItems);
+        Log.d("ShopFragment", "refreshItemList: Trying to call refresh on the adapter");
     }
 
 

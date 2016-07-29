@@ -447,8 +447,8 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
 
     //a null user pulls from the shop, otherwise from inventory of that specific user
     public ArrayList<Item> getItemsByName(String name, User user){
-        String selection = COL_ITEM_NAME+" = ?";
-        String[] args = {name};
+        String selection = COL_ITEM_NAME+" LIKE ?";
+        String[] args = {"%" + name + "%"};
         if(user == null){
             return getShopItems(selection, args);
         }
@@ -458,8 +458,8 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Item> getItemsByType(String type, User user){
-        String selection = COL_ITEM_TYPE+" = ?";
-        String[] args = {type};
+        String selection = COL_ITEM_TYPE+" LIKE ?";
+        String[] args = {"%" + type + "%"};
         if(user == null){
             return getShopItems(selection, args);
         }
@@ -481,8 +481,8 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
 
     //searches for items with a price within 10 gold of the entered number
     public ArrayList<Item> getItemsByPrice(int price, User user){
-        String selection = COL_ITEM_PRICE+" = ?";
-        String[] args = {price + ""};
+        String selection = COL_ITEM_PRICE+" < ? OR "+COL_ITEM_PRICE+" > ?";
+        String[] args = {(price + 50) + "", (price - 50) + ""};
         if(user == null){
             return getShopItems(selection, args);
         }
@@ -492,8 +492,8 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Item> getItemsByDescription(String description, User user){
-        String selection = COL_DESCRIPTION+" = ?";
-        String[] args = {description};
+        String selection = COL_DESCRIPTION+" LIKE ?";
+        String[] args = {"%" + description + "%"};
         if(user == null){
             return getShopItems(selection, args);
         }

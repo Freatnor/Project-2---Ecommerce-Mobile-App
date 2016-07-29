@@ -40,6 +40,8 @@ public class ShopActivity extends AppCompatActivity
 
     private ShopFragment mFragment;
 
+    private SearchView mSearchView;
+
 
 
     @Override
@@ -109,12 +111,36 @@ public class ShopActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.shop, menu);
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        mSearchView = (SearchView) menu.findItem(R.id.search).getActionView();
+
         ComponentName componentName = new ComponentName(this, this.getClass());
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
-        searchView.setQueryRefinementEnabled(true);
+        mSearchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
+        mSearchView.setQueryRefinementEnabled(true);
+
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                if (s != null) {
+                    if (s.isEmpty()) {
+                        ArrayList<Item> newItems = mHelper.getShopItems(null, null);
+                        mFragment.refreshItemList(newItems);
+                    } else {
+                        ArrayList<Item> newItems = mHelper.getItemsByName(s, null);
+                        mFragment.refreshItemList(newItems);
+                    }
+                }
+                return true;
+            }
+        });
         return true;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -137,18 +163,13 @@ public class ShopActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_loadout) {
+            startActivity(new Intent(ShopActivity.this, UserLoadoutActivity.class));
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_shop) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_shopping_cart) {
+            startActivity(new Intent(ShopActivity.this, ShoppingCartActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

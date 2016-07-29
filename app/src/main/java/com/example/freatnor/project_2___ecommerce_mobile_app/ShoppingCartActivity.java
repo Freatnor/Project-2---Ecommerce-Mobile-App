@@ -137,7 +137,9 @@ public class ShoppingCartActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_clear_all) {
+            mCart.clearCart();
+
             return true;
         }
 
@@ -150,17 +152,12 @@ public class ShoppingCartActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_loadout) {
+            startActivity(new Intent(ShoppingCartActivity.this, UserLoadoutActivity.class));
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_shop) {
+            startActivity(new Intent(ShoppingCartActivity.this, ShoppingCartActivity.class));
+        } else if (id == R.id.nav_shopping_cart) {
 
         }
 

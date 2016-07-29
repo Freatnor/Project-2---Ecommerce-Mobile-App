@@ -8,4 +8,6 @@
     <string name="title_activity_shopping_cart">ShoppingCartActivity</string>
     <string name="search_hint">Search for an item</string>
     <string name="search_title">Search</string>
+    <string name="clear_all">Clear All</string>
+    <string name="title_activity_slot_select">SlotSelectActivity</string>
 </resources>
