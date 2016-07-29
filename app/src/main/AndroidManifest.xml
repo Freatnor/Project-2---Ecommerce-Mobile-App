@@ -40,6 +40,7 @@
         <activity
             android:name=".ShoppingCartActivity"
             android:label="@string/title_activity_shopping_cart"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>

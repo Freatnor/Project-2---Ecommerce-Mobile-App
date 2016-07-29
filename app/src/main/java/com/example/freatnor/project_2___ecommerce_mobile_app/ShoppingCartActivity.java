@@ -156,7 +156,7 @@ public class ShoppingCartActivity extends AppCompatActivity
             startActivity(new Intent(ShoppingCartActivity.this, UserLoadoutActivity.class));
             // Handle the camera action
         } else if (id == R.id.nav_shop) {
-            startActivity(new Intent(ShoppingCartActivity.this, ShoppingCartActivity.class));
+            startActivity(new Intent(ShoppingCartActivity.this, ShopActivity.class));
         } else if (id == R.id.nav_shopping_cart) {
 
         }
