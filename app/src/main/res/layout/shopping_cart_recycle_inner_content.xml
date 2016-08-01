@@ -11,15 +11,15 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="@dimen/item_background_dimen"
+            android:layout_height="@dimen/item_background_dimen"
             android:src="@mipmap/ic_frame_equipment"
             />
 
         <ImageView
             android:id="@+id/item_image_container"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/item_icon_dimen"
+            android:layout_height="@dimen/item_icon_dimen"
             android:layout_gravity="center"
             android:src="@drawable/ic_physical_attack"
             />

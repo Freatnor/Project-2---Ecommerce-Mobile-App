@@ -1,7 +1,6 @@
 package com.example.freatnor.project_2___ecommerce_mobile_app;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,7 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.freatnor.project_2___ecommerce_mobile_app.items.Item;
-import com.example.freatnor.project_2___ecommerce_mobile_app.recyclerviewclasses.ItemRecyclerViewAdapter;
+import com.example.freatnor.project_2___ecommerce_mobile_app.presenter.ItemRecyclerViewAdapter;
 
 import java.util.ArrayList;
 

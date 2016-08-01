@@ -1,14 +1,12 @@
-package com.example.freatnor.project_2___ecommerce_mobile_app.recyclerviewclasses;
+package com.example.freatnor.project_2___ecommerce_mobile_app.presenter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.freatnor.project_2___ecommerce_mobile_app.R;

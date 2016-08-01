@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,12 +20,13 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.freatnor.project_2___ecommerce_mobile_app.database.FantasyShopDatabaseHelper;
+import com.example.freatnor.project_2___ecommerce_mobile_app.interfaces.OnSlotClickedListener;
 import com.example.freatnor.project_2___ecommerce_mobile_app.items.Item;
 
 import java.util.ArrayList;
 
-public class UserLoadoutActivity extends AppCompatActivity implements UserLoadoutFragment.OnSlotClickedListener, NavigationView.OnNavigationItemSelectedListener,
-        ShopFragment.OnDetailRequestedListener{
+public class UserLoadoutActivity extends AppCompatActivity implements UserLoadoutFragment.OnSlotItemClickedListener, NavigationView.OnNavigationItemSelectedListener,
+        ShopFragment.OnDetailRequestedListener, OnSlotClickedListener{
 
     private User mUser;
 
@@ -225,5 +227,36 @@ public class UserLoadoutActivity extends AppCompatActivity implements UserLoadou
                 Toast.makeText(UserLoadoutActivity.this, "What did you choose?", Toast.LENGTH_SHORT).show();
         }
         getSupportFragmentManager().popBackStack();
+    }
+
+    @Override
+    public void onSlotClicked(String slotName) {
+        SlotSelectFragment slotFragment = null;
+        switch(slotName){
+            case "head":
+                slotFragment = SlotSelectFragment.getInstance(this, mUser.getHeadItem(), slotName);
+                break;
+            case "chest":
+                slotFragment = SlotSelectFragment.getInstance(this, mUser.getChestItem(), slotName);
+                break;
+            case "right":
+                slotFragment = SlotSelectFragment.getInstance(this, mUser.getRightItem(), slotName);
+                break;
+            case "left":
+                slotFragment = SlotSelectFragment.getInstance(this, mUser.getLeftItem(), slotName);
+                break;
+            case "accessory1":
+                slotFragment = SlotSelectFragment.getInstance(this, mUser.getAccessory1Item(), slotName);
+                break;
+            case "accessory2":
+                slotFragment = SlotSelectFragment.getInstance(this, mUser.getAccessory2Item(), slotName);
+                break;
+            default:
+                Toast.makeText(UserLoadoutActivity.this, "What did you choose?", Toast.LENGTH_SHORT).show();
+        }
+        getSupportFragmentManager()
+                .beginTransaction()
+                .addToBackStack("LoadoutFragment")
+                .replace(R.id.loadout_activity_fragment_container, slotFragment).commit();
     }
 }

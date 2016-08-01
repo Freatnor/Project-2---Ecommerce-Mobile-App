@@ -4,11 +4,8 @@ import android.content.Context;
 
 import com.example.freatnor.project_2___ecommerce_mobile_app.database.FantasyShopDatabaseHelper;
 import com.example.freatnor.project_2___ecommerce_mobile_app.items.Item;
-import com.example.freatnor.project_2___ecommerce_mobile_app.recyclerviewclasses.ShoppingCartItemRecyclerViewAdapter;
 
 import java.util.ArrayList;
-
-import io.realm.RealmObject;
 
 /**
  * Singleton? If there are multiple users maybe it won't be a singleton anymore...

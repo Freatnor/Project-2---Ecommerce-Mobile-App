@@ -3,8 +3,6 @@ package com.example.freatnor.project_2___ecommerce_mobile_app;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,8 +21,7 @@ import android.widget.Toast;
 
 import com.example.freatnor.project_2___ecommerce_mobile_app.database.FantasyShopDatabaseHelper;
 import com.example.freatnor.project_2___ecommerce_mobile_app.items.Item;
-import com.example.freatnor.project_2___ecommerce_mobile_app.recyclerviewclasses.ItemRecyclerViewAdapter;
-import com.example.freatnor.project_2___ecommerce_mobile_app.recyclerviewclasses.ShoppingCartItemRecyclerViewAdapter;
+import com.example.freatnor.project_2___ecommerce_mobile_app.presenter.ShoppingCartItemRecyclerViewAdapter;
 
 public class ShoppingCartActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ShoppingCartItemRecyclerViewAdapter.ShoppingCartTotalChangeListener {

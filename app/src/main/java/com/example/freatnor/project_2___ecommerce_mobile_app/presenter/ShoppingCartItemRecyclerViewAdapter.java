@@ -1,4 +1,4 @@
-package com.example.freatnor.project_2___ecommerce_mobile_app.recyclerviewclasses;
+package com.example.freatnor.project_2___ecommerce_mobile_app.presenter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -12,12 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.freatnor.project_2___ecommerce_mobile_app.R;
-import com.example.freatnor.project_2___ecommerce_mobile_app.ShopFragment;
 import com.example.freatnor.project_2___ecommerce_mobile_app.ShoppingCart;
-import com.example.freatnor.project_2___ecommerce_mobile_app.ShoppingCartItem;
-import com.example.freatnor.project_2___ecommerce_mobile_app.items.Item;
-
-import java.util.ArrayList;
 
 /**
  * Created by Jonathan Taylor on 7/27/16.

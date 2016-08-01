@@ -8,4 +8,6 @@
     <dimen name="nav_header_height">160dp</dimen>
     <dimen name="item_detail_text_size">18sp</dimen>
     <dimen name="item_detail_icon_side_length">25dp</dimen>
+    <dimen name="item_background_dimen">120dp</dimen>
+    <dimen name="item_icon_dimen">80dp</dimen>
 </resources>

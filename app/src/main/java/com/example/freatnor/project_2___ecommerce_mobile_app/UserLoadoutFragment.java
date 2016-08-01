@@ -1,25 +1,16 @@
 package com.example.freatnor.project_2___ecommerce_mobile_app;
 
 import android.content.Context;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.freatnor.project_2___ecommerce_mobile_app.items.Item;
-import com.example.freatnor.project_2___ecommerce_mobile_app.recyclerviewclasses.ItemRecyclerViewAdapter;
-
-import java.util.ArrayList;
 
 /**
  * Created by Jonathan Taylor on 7/29/16.
@@ -45,19 +36,19 @@ public class UserLoadoutFragment extends Fragment {
     private ImageView mAcc2Button;
 
 
-    public interface OnSlotClickedListener{
+    public interface OnSlotItemClickedListener {
         void onSlotItemClicked(String slot, Item item);
     }
-    private OnSlotClickedListener mOnSlotClickedListener;
+    private OnSlotItemClickedListener mOnSlotItemClickedListener;
 
     private Context mContext;
 
 
 
-    public static UserLoadoutFragment getInstance(User user, OnSlotClickedListener onSlotClickedListener, Context context){
+    public static UserLoadoutFragment getInstance(User user, OnSlotItemClickedListener onSlotItemClickedListener, Context context){
         UserLoadoutFragment fragment = new UserLoadoutFragment();
         fragment.mUser = user;
-        fragment.mOnSlotClickedListener = onSlotClickedListener;
+        fragment.mOnSlotItemClickedListener = onSlotItemClickedListener;
         fragment.mContext = context;
         return fragment;
     }
@@ -80,6 +71,8 @@ public class UserLoadoutFragment extends Fragment {
         mAcc2 = (ImageView) parentView.findViewById(R.id.accessory_2_slot_image);
         mAcc2Button = (ImageView) parentView.findViewById(R.id.accessory_2_slot_button);
         //space for creating and binding new lower fragment
+
+
 
         return parentView;
     }
