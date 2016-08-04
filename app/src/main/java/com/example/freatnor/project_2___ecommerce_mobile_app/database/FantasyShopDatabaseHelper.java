@@ -282,6 +282,11 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void insertInventoryItemsAsync(ArrayList<Item> items){
+        InsertItemsAsyncTask task = new InsertItemsAsyncTask();
+        task.execute(items);
+    }
+
     //insert or update user data, any item slot will insert null if not present
     public void insertOrUpdateUser(User user, SQLiteDatabase db){
         boolean needsClose = false;
@@ -489,7 +494,7 @@ public class FantasyShopDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    //searches for items with a price within 10 gold of the entered number
+    //searches for items with a price within 10 gold of the entered number, maybe change to sort?
     public ArrayList<Item> getItemsByPrice(int price, User user){
         String selection = COL_ITEM_PRICE+" < ? OR "+COL_ITEM_PRICE+" > ?";
         String[] args = {(price + 50) + "", (price - 50) + ""};

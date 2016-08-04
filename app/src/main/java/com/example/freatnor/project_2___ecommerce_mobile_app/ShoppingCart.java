@@ -136,7 +136,7 @@ public class ShoppingCart {
         for (int i = 0; i < mItems.size(); i++) {
             items.add(mItems.get(i).getItem());
         }
-        mHelper.insertInventoryItems(items);
+        mHelper.insertInventoryItemsAsync(items);
         clearCart();
     }
 
